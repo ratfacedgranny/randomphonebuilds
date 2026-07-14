@@ -40,6 +40,8 @@ GitHub Pages deploys automatically — usually 30–60 seconds.
 
 ## Design style guide
 
+The house style below is the **default baseline**, not a straitjacket. Zach isn't design-obsessed like Matt — so unless he asks for something specific, use good judgment to make each page look its best, and lean on the house tokens so the site still feels cohesive. If he asks for a different look for a given page, do that instead.
+
 Match the homepage. Apple-inspired, clean, reads great on a phone.
 
 - **Font:** Inter (Google Fonts) with `-apple-system, BlinkMacSystemFont, "SF Pro Display"` fallback

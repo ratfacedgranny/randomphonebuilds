@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-07-14">
+<title>X32 Field Guide — Pioneer Point Festival</title>
+<link rel="icon" href="data:,">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --accent-soft: rgba(196, 32, 32, 0.06);
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --warn-bg: #FFF6E9;
+    --warn-border: #E8A13C;
+    --ok: #2E7D46;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .top-bar { height: 3px; background: var(--accent); }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5rem) clamp(1.25rem, 4vw, 2rem) 5rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; }
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 0.6rem;
+  }
+  .lede {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* Disclaimer band */
+  .disclaimer {
+    margin: 1.75rem 0 0;
+    padding: 0.9rem 1.1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .disclaimer strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Table of contents */
+  nav.toc {
+    margin: 2.5rem 0;
+    padding: 1.1rem 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+  }
+  nav.toc p {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+  }
+  nav.toc ol { list-style: none; counter-reset: toc; }
+  nav.toc li { counter-increment: toc; }
+  nav.toc a {
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.35rem 0;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: color 0.15s ease;
+  }
+  nav.toc a::before {
+    content: counter(toc);
+    color: var(--accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 1.1em;
+  }
+  nav.toc a:hover { color: var(--accent); }
+
+  /* Sections */
+  section { margin-top: 3rem; scroll-margin-top: 1.5rem; }
+  h2 {
+    font-size: clamp(1.35rem, 3.5vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  h2 .num {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.5rem;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 1.75rem 0 0.5rem;
+  }
+  .section-sub {
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  p { margin-bottom: 1rem; }
+  strong { font-weight: 600; }
+  a { color: var(--accent); }
+
+  ul, ol { margin: 0 0 1rem 0; padding-left: 1.3rem; }
+  li { margin-bottom: 0.45rem; }
+  li::marker { color: var(--text-secondary); }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    background: #F0F0F2;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+    padding: 0.08rem 0.38rem;
+    white-space: nowrap;
+  }
+
+  /* Callouts */
+  .callout {
+    margin: 1.5rem 0;
+    padding: 1.1rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.97rem;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .callout-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .callout.warn {
+    background: var(--warn-bg);
+    border: 1px solid rgba(232, 161, 60, 0.5);
+    border-left: 3px solid var(--warn-border);
+  }
+  .callout.warn .callout-head { color: #9A5B12; }
+  .callout.danger {
+    background: var(--accent-soft);
+    border: 1px solid rgba(196, 32, 32, 0.3);
+    border-left: 3px solid var(--accent);
+  }
+  .callout.danger .callout-head { color: var(--accent); }
+
+  /* Fast tree steps */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 1.25rem 0; }
+  .steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: 1rem 1rem 1rem 3.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0.85rem;
+    top: 0.95rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .steps .step-title { font-weight: 600; display: block; margin-bottom: 0.3rem; }
+  .steps ul { margin: 0.5rem 0 0; }
+  .steps ul li { margin-bottom: 0.3rem; font-size: 0.94rem; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    min-width: 460px;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+  thead th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--divider);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 1.25rem 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.7rem 0.25rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .box {
+    flex-shrink: 0;
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 2px solid var(--divider);
+    border-radius: 5px;
+    margin-top: 0.25rem;
+  }
+
+  .pill-ok { color: var(--ok); font-weight: 600; }
+  .divider-rule { border: none; border-top: 1px solid var(--divider); margin: 3rem 0 0; }
+
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+  footer .sources { margin-top: 0.75rem; line-height: 1.9; }
+  footer a { color: var(--text-secondary); }
+  footer a:hover { color: var(--accent); }
+  .back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back:hover { text-decoration: underline; }
+
+  @media (max-width: 500px) {
+    code { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Live Sound · Field Guide</p>
+    <h1>X32 Field Guide</h1>
+    <p class="lede">Pioneer Point Festival, July 2026 — two X32s (FOH + monitors) on an analog splitter snake.</p>
+    <p class="disclaimer">Written from documentation, not from experience. <strong>Zach is the engineer; this is a fast-recall sheet, not a second opinion.</strong> If it contradicts what you're hearing in the room, trust the room.</p>
+  </header>
+
+  <nav class="toc">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#rig">Your rig — why it's the robust choice</a></li>
+      <li><a href="#phantom">Phantom power — settle it before doors</a></li>
+      <li><a href="#no-audio">No audio — the fast tree</a></li>
+      <li><a href="#monitors">Monitor desk</a></li>
+      <li><a href="#scenes">Scenes &amp; safes — the festival killer</a></li>
+      <li><a href="#checklist">Before you leave the house</a></li>
+    </ol>
+  </nav>
+
+  <section id="rig">
+    <h2><span class="num">1</span>Your rig — why it's the robust choice</h2>
+    <p class="section-sub">Analog splitter snake → two independent X32s.</p>
+    <p>This matters more than it sounds like it does. The alternative — sharing an S16/S32 stage box over AES50 — means the two desks <strong>share preamps</strong>. So when your monitor engineer rides gain to kill feedback, <strong>your FOH mix moves too.</strong> It's a classic X32 festival trap.</p>
+    <p>With an analog split:</p>
+    <ul>
+      <li><span class="pill-ok">✓</span> Each console has <strong>its own preamps</strong> — independent gain, no interference</li>
+      <li><span class="pill-ok">✓</span> <strong>No AES50 clock/sync</strong> between desks — nothing to misconfigure, nothing to drop out</li>
+      <li><span class="pill-ok">✓</span> Either desk can crash or reboot and <strong>the other one keeps working</strong></li>
+    </ul>
+    <p>The only thing the two desks physically share is <strong>the mic signal and phantom power</strong> — which is exactly what the next section is about.</p>
+  </section>
+
+  <section id="phantom">
+    <h2><span class="num">2</span>Phantom power — settle it before doors</h2>
+    <div class="callout danger">
+      <div class="callout-head">⚠ The #1 thing that bites analog-split festivals</div>
+      <p>A splitter snake has a <strong>direct leg</strong> (hard-wired) and <strong>isolated leg(s)</strong> (transformer). Phantom power (+48V) only passes through the <strong>direct</strong> leg — transformers block DC.</p>
+    </div>
+    <p>So, before doors:</p>
+    <ol>
+      <li>Find out <strong>which console is on the direct leg</strong> of your splitter.</li>
+      <li><strong>Only that console sends +48V.</strong> The other leaves phantom OFF on every channel.</li>
+      <li>Tell your monitor engineer explicitly. Agree out loud. Don't assume.</li>
+    </ol>
+    <p><strong>If phantom is on the wrong leg:</strong> condensers and active DIs go dead or weird, and you'll waste twenty minutes at line check chasing a "bad channel" that isn't bad.</p>
+    <p><strong>If both desks send +48V:</strong> at best it's redundant; at worst you get noise or a fight between supplies through the split.</p>
+  </section>
+
+  <section id="no-audio">
+    <h2><span class="num">3</span>No audio — the fast tree</h2>
+    <p class="section-sub">Work top to bottom. Don't skip — the answer is almost always higher up than you think.</p>
+    <ol class="steps">
+      <li>
+        <span class="step-title">Is signal hitting the desk at all?</span>
+        <ul>
+          <li>Meter on the channel strip — any movement?</li>
+          <li>Gain up? Phantom on (if it's a condenser/active DI, and you're on the <em>direct</em> leg)?</li>
+          <li>No meter → the problem is <strong>before</strong> the console: cable, mic, splitter, stage.</li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-title">Is the channel getting the right source?</span>
+        <ul>
+          <li><code>ROUTING → Inputs</code> — is the block set to <strong>Local</strong> (your XLR ins)? Not Card, not AES50.</li>
+          <li>Channel <code>Config</code> → is Source the input you think it is?</li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-title">Is it muted somewhere you're not looking?</span>
+        <ul>
+          <li>Channel mute</li>
+          <li><strong>DCA mute</strong> — a muted DCA silences its members even with the channel unmuted</li>
+          <li><strong>Mute group</strong> — the sneaky one</li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-title">Is it going to the main bus?</span>
+        <ul>
+          <li>Channel <code>Home</code> → <strong>Main LR</strong> assign is ON</li>
+          <li>Channel fader actually up</li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-title">Is Main LR getting out of the box?</span>
+        <ul>
+          <li>Main LR fader up, not muted</li>
+          <li><code>ROUTING → Out 1-16</code> — <strong>is Main L/R actually patched to the physical XLR outs you're using?</strong> This is the one that gets people: meters dance on the desk, nothing comes out of the PA.</li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-title">Still nothing?</span>
+        <ul>
+          <li>Solo/PFL stuck on somewhere? (Check the solo clear.)</li>
+          <li>Headphones work but XLR out doesn't → it's an <strong>output patch</strong> problem, guaranteed. Back to step 5.</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section id="monitors">
+    <h2><span class="num">4</span>Monitor desk</h2>
+    <p class="section-sub">For your monitor engineer.</p>
+    <div class="callout warn">
+      <div class="callout-head">Sends must be PRE-FADER</div>
+      <p>That's the whole point — so when you pull the lead vocal down at FOH, the drummer's wedge doesn't change.</p>
+    </div>
+    <ul>
+      <li>Channel sends to the monitor buses: <strong>pre-fader</strong></li>
+      <li>Bus <strong>output tap: post-fader</strong>, so the bus master fader still controls wedge volume</li>
+      <li><strong>Limiter on every monitor bus</strong>, threshold below −3 dBFS — cheap insurance against a dropped mic or a feedback squeal going straight into someone's ears</li>
+      <li><strong>Sends on Fader</strong> is the fast way to build a mix: hold the bus's select button, then the faders become that bus's sends. This is how monitor mixes get built quickly at line check.</li>
+    </ul>
+  </section>
+
+  <section id="scenes">
+    <h2><span class="num">5</span>Scenes &amp; safes — the festival killer</h2>
+    <p class="section-sub">Multiple bands = multiple scene recalls = the chance to nuke your PA between sets.</p>
+    <p>When you load a band's scene, by default it can overwrite <strong>routing, output patch, and preamp gains.</strong> Load the wrong scene and the house goes silent — mid-changeover, with an audience.</p>
+
+    <h3>Two kinds of safes, and the difference matters</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Scope</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Scene Safes</strong></td>
+            <td>⚠ Per-scene, <strong>NOT</strong> global</td>
+            <td>Set on each scene individually. Easy to forget one.</td>
+          </tr>
+          <tr>
+            <td><strong>Channel / Parameter Safes</strong></td>
+            <td><span class="pill-ok">✓</span> <strong>Global</strong> — apply to every recall</td>
+            <td>This is what you want for festival protection.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Set global safes before doors</h3>
+    <ul>
+      <li><strong>Routing I/O</strong> — so a scene recall can't repatch your inputs</li>
+      <li><strong>Output Patch</strong> — so a scene recall can't disconnect your PA</li>
+      <li><strong>Preamp (HA)</strong> — so a scene recall can't blow up your gains</li>
+      <li>Consider safing <strong>mutes</strong> on input channels, so a stale scene can't mute something live</li>
+    </ul>
+    <p>Then a band's scene recalls their <strong>channel processing</strong> (EQ, comp, mix) without ever touching the infrastructure keeping sound in the room.</p>
+
+    <h3>Between bands</h3>
+    <ul>
+      <li>Save a scene per band, named clearly</li>
+      <li><strong>Save the show file to USB</strong> — and do it again after you finish tweaking at soundcheck</li>
+      <li>If a recall goes wrong: don't panic-fix twenty things. <strong>Reload your known-good scene.</strong></li>
+    </ul>
+  </section>
+
+  <section id="checklist">
+    <h2><span class="num">6</span>Before you leave the house</h2>
+    <ul class="checklist">
+      <li><span class="box"></span><span>Both X32s on the <strong>same firmware</strong> (mismatches cause weird show-file behavior)</span></li>
+      <li><span class="box"></span><span>Show file saved to <strong>USB</strong>, and a <strong>second USB</strong> with the same file</span></li>
+      <li><span class="box"></span><span>Agreed with monitor engineer: <strong>who sends phantom</strong> (the direct-leg desk)</span></li>
+      <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
+      <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-head">If something goes sideways this weekend</div>
+      <p>Text me what you're seeing — what's metering, what isn't, where the signal stops. I can walk the tree above faster than you can find it in a manual with a band waiting.</p>
+      <p style="margin-top:0.6rem"><strong>Good for:</strong> menu paths, routing logic, "why is this channel silent," what a setting actually does. <strong>Not:</strong> ears in the room. If it sounds wrong but the routing is right, that's yours.</p>
+    </div>
+  </section>
+
+  <hr class="divider-rule">
+  <footer>
+    <div>Published July 14, 2026 · Built for Pioneer Point Festival</div>
+    <div class="sources">
+      <strong style="color:var(--text-primary); font-weight:600;">Sources:</strong><br>
+      <a href="https://drewbrashler.com/2022/intro-to-the-mixbus/">Drew Brashler — mixbus</a> ·
+      <a href="https://drewbrashler.com/2016/behringer-x32-scene-safes/">scene safes</a> ·
+      <a href="https://drewbrashler.com/2017/x32-output-tap/">output tap</a> ·
+      <a href="https://www.iemrig.com/guides/x32-iem-setup">IEM Rig — X32 IEM setup</a> ·
+      <a href="https://www.sweetwater.com/sweetcare/articles/behringer-x32-sound-routing-and-recording/">Sweetwater — X32 routing</a>
+    </div>
+    <a class="back" href="../">← All builds</a>
+  </footer>
+
+</div>
+</body>
+</html>
