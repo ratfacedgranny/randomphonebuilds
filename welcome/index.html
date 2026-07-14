@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-07-14">
+<title>Welcome — how this site works</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top-bar { height: 3px; background: var(--accent); }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 4vw, 2rem) 4rem;
+  }
+  .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 2.5rem 0 0.75rem;
+  }
+  p { margin-bottom: 1rem; color: var(--text-primary); }
+  p.muted { color: var(--text-secondary); }
+  ol, ul { margin: 0 0 1rem 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+    padding: 0.1rem 0.4rem;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--divider);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+  <p class="label">Random Phone Builds</p>
+  <h1>Welcome aboard</h1>
+  <p class="subtitle">This is your spot to park little pages and share them with people.</p>
+
+  <h2>How it works</h2>
+  <p>Every page you publish lives in its own folder in the repo. The homepage automatically finds every folder and lists it — newest first — so you never have to update an index by hand. Make a thing, push it, and it shows up.</p>
+
+  <h2>Adding a new page</h2>
+  <p>You don't do this part by hand. Just tell Claude:</p>
+  <p><code>push this to randomphonebuilds</code></p>
+  <p class="muted">Claude turns whatever you're working on into a clean page in this same style, drops it in a new folder, and pushes it. About a minute later it's live and on the homepage.</p>
+
+  <h2>A word on the password</h2>
+  <p>The homepage asks for a password (<code>letmesee</code>), but treat this whole site as public — anyone with a direct link to a page can open it, and the files are readable on GitHub. It's fine for notes, guides, and builds. Keep contracts, invoices, and anyone's private info off of it.</p>
+
+  <footer>Published July 14, 2026 &middot; Random Phone Builds</footer>
+</div>
+</body>
+</html>
