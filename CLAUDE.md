@@ -56,6 +56,42 @@ Match the homepage. Apple-inspired, clean, reads great on a phone.
 
 Reuse the `:root` custom-property block and base styles from the homepage `index.html` so pages stay consistent.
 
+### Dark mode — REQUIRED on every document
+
+Every project page must have a working light/dark toggle. The reference implementation is in `pioneer-point-x32/index.html` — copy that pattern. Build every page with **CSS custom properties for all colors** (never hardcode a hex in a rule — use a token), so a single dark override block re-themes the whole page.
+
+**1. Theme tokens** — light in `:root`, dark in `:root[data-theme="dark"]`:
+```css
+:root {
+  --accent: #C42020; --accent-soft: rgba(196,32,32,0.06); --on-accent: #FFFFFF;
+  --bg: #FAFAFA; --card-bg: #FFFFFF;
+  --text-primary: #1D1D1F; --text-secondary: #6E6E73;
+  --divider: #E5E5E7; --code-bg: #F0F0F2;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --accent: #FF6B5E; --accent-soft: rgba(255,107,94,0.10); --on-accent: #201014;
+  --bg: #161619; --card-bg: #1F1F24;
+  --text-primary: #F5F5F7; --text-secondary: #A1A1A6;
+  --divider: #34343C; --code-bg: #2A2A31;
+  color-scheme: dark;
+}
+```
+Note the accent **brightens** in dark (`#C42020` is too dark on a near-black bg), and `--on-accent` is the text/foreground color to use on top of an accent-filled shape (white in light, near-black in dark) — use it anywhere you'd otherwise put `color:#fff` on an accent background.
+
+**2. Anti-flash script in `<head>`** (sets theme before paint):
+```html
+<script>(function(){try{var s=localStorage.getItem('rpb_theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(d?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+```
+
+**3. Toggle button** (first thing in `<body>`) + handler (end of `<body>`):
+```html
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+...
+<script>(function(){var r=document.documentElement,b=document.getElementById('themeToggle');function s(){b.textContent=r.getAttribute('data-theme')==='dark'?'☀️':'🌙';}s();b.addEventListener('click',function(){var t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);try{localStorage.setItem('rpb_theme',t);}catch(e){}s();});})();</script>
+```
+Default follows the visitor's OS setting; their manual choice is remembered per-device in `localStorage` under `rpb_theme` (shared key across all pages, so the whole site stays in sync).
+
 ## Formatting rules
 - Never wrap URLs/links in bold (`**`). Paste them plain.
 

@@ -5,20 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="published" content="2026-07-14">
 <title>X32 Field Guide — Pioneer Point Festival</title>
+<script>
+  // Set theme before paint to avoid a flash. Stored choice wins; else follow the OS.
+  (function () {
+    try {
+      var s = localStorage.getItem('rpb_theme');
+      var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', s || (d ? 'dark' : 'light'));
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
 <link rel="icon" href="data:,">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --accent: #C42020;
     --accent-soft: rgba(196, 32, 32, 0.06);
+    --on-accent: #FFFFFF;
     --bg: #FAFAFA;
     --card-bg: #FFFFFF;
     --text-primary: #1D1D1F;
     --text-secondary: #6E6E73;
     --divider: #E5E5E7;
+    --code-bg: #F0F0F2;
     --warn-bg: #FFF6E9;
     --warn-border: #E8A13C;
+    --warn-ink: #9A5B12;
     --ok: #2E7D46;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --accent: #FF6B5E;
+    --accent-soft: rgba(255, 107, 94, 0.10);
+    --on-accent: #201014;
+    --bg: #161619;
+    --card-bg: #1F1F24;
+    --text-primary: #F5F5F7;
+    --text-secondary: #A1A1A6;
+    --divider: #34343C;
+    --code-bg: #2A2A31;
+    --warn-bg: #2A2214;
+    --warn-border: #E8A13C;
+    --warn-ink: #F0B45C;
+    --ok: #4ADE80;
+    color-scheme: dark;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -31,6 +63,28 @@
     -moz-osx-font-smoothing: grayscale;
   }
   .top-bar { height: 3px; background: var(--accent); }
+
+  /* Dark-mode toggle */
+  .theme-toggle {
+    position: fixed;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 50;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, border-color 0.2s ease;
+  }
+  .theme-toggle:hover { transform: scale(1.06); border-color: var(--accent); }
   .container {
     max-width: 720px;
     margin: 0 auto;
@@ -146,7 +200,7 @@
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.85em;
-    background: #F0F0F2;
+    background: var(--code-bg);
     border: 1px solid var(--divider);
     border-radius: 5px;
     padding: 0.08rem 0.38rem;
@@ -174,7 +228,7 @@
     border: 1px solid rgba(232, 161, 60, 0.5);
     border-left: 3px solid var(--warn-border);
   }
-  .callout.warn .callout-head { color: #9A5B12; }
+  .callout.warn .callout-head { color: var(--warn-ink); }
   .callout.danger {
     background: var(--accent-soft);
     border: 1px solid rgba(196, 32, 32, 0.3);
@@ -210,6 +264,7 @@
     font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
+  .steps > li::before { color: var(--on-accent); }
   .steps .step-title { font-weight: 600; display: block; margin-bottom: 0.3rem; }
   .steps ul { margin: 0.5rem 0 0; }
   .steps ul li { margin-bottom: 0.3rem; font-size: 0.94rem; }
@@ -286,6 +341,7 @@
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 <div class="top-bar"></div>
 <div class="container">
 
@@ -319,6 +375,14 @@
       <li><span class="pill-ok">✓</span> Either desk can crash or reboot and <strong>the other one keeps working</strong></li>
     </ul>
     <p>The only thing the two desks physically share is <strong>the mic signal and phantom power</strong> — which is exactly what the next section is about.</p>
+
+    <h3>The signal chain</h3>
+    <p>Stage mics &amp; DIs → <strong>splitter snake</strong>, which splits into two legs:</p>
+    <ul>
+      <li><strong>Monitor desk</strong> (X32 #1) → wedges / IEMs on stage</li>
+      <li><strong>FOH desk</strong> (X32 #2) → Main L/R out → <strong>dbx DriveRack</strong> → amps → mains + subs</li>
+    </ul>
+    <p>The <strong>DriveRack</strong> is the loudspeaker-management box between the FOH desk and the PA: it handles the crossover (splitting mains vs subs), system EQ, and protection limiting for the boxes. It's one more link in the output chain — it shows up again in the no-audio tree below.</p>
   </section>
 
   <section id="phantom">
@@ -379,10 +443,19 @@
         </ul>
       </li>
       <li>
+        <span class="step-title">Signal leaves the desk but the PA is still silent? Check the DriveRack.</span>
+        <ul>
+          <li>The <strong>dbx DriveRack</strong> sits between the FOH main out and the amps. It can kill the PA while the desk meters look perfectly fine.</li>
+          <li>Is it <strong>powered</strong> and receiving input (input meters moving)?</li>
+          <li><strong>Outputs muted?</strong> Wrong <strong>program/preset</strong> loaded? A limiter clamped all the way down?</li>
+          <li>Know your <strong>bypass / known-good preset</strong> so you can get sound back fast, then diagnose.</li>
+        </ul>
+      </li>
+      <li>
         <span class="step-title">Still nothing?</span>
         <ul>
           <li>Solo/PFL stuck on somewhere? (Check the solo clear.)</li>
-          <li>Headphones work but XLR out doesn't → it's an <strong>output patch</strong> problem, guaranteed. Back to step 5.</li>
+          <li>Headphones work but XLR out doesn't → it's an <strong>output patch</strong> problem on the desk, guaranteed. Back to step 5. (If the desk out is clean, it's downstream — DriveRack or amps, step 6.)</li>
         </ul>
       </li>
     </ol>
@@ -390,17 +463,19 @@
 
   <section id="monitors">
     <h2><span class="num">4</span>Monitor desk</h2>
-    <p class="section-sub">For your monitor engineer.</p>
+    <p class="section-sub">For your monitor engineer. This is X32 #1 — its own desk, its own preamps.</p>
     <div class="callout warn">
-      <div class="callout-head">Sends must be PRE-FADER</div>
-      <p>That's the whole point — so when you pull the lead vocal down at FOH, the drummer's wedge doesn't change.</p>
+      <div class="callout-head">Keep monitor sends PRE-FADER</div>
+      <p>Not because of FOH — the split already guarantees the two desks can't touch each other. Pre-fader here keeps each wedge mix independent of <em>this desk's own</em> channel faders, so a stray fader move can't rewrite someone's mix mid-song.</p>
     </div>
+    <p><strong>Why the split doesn't change this:</strong> with two separate consoles on a splitter snake, FOH fader moves can never reach the monitor mixes — that was never the risk. Pre-fader is about what happens on the monitor desk <em>itself</em>: with post-fader sends, nudging one channel fader shifts that channel in every wedge it feeds at once. Pre-fader means the faders can sit anywhere (or go untouched) and the mixes hold.</p>
     <ul>
       <li>Channel sends to the monitor buses: <strong>pre-fader</strong></li>
       <li>Bus <strong>output tap: post-fader</strong>, so the bus master fader still controls wedge volume</li>
       <li><strong>Limiter on every monitor bus</strong>, threshold below −3 dBFS — cheap insurance against a dropped mic or a feedback squeal going straight into someone's ears</li>
       <li><strong>Sends on Fader</strong> is the fast way to build a mix: hold the bus's select button, then the faders become that bus's sends. This is how monitor mixes get built quickly at line check.</li>
     </ul>
+    <p style="font-size:0.92rem; color:var(--text-secondary)">If your monitor engineer would rather run post-fader and use the channel faders as per-mix trims, that's a legitimate choice — just know the tradeoff above and keep faders parked once the show starts.</p>
   </section>
 
   <section id="scenes">
@@ -453,6 +528,7 @@
       <li><span class="box"></span><span>Show file saved to <strong>USB</strong>, and a <strong>second USB</strong> with the same file</span></li>
       <li><span class="box"></span><span>Agreed with monitor engineer: <strong>who sends phantom</strong> (the direct-leg desk)</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
+      <li><span class="box"></span><span><strong>dbx DriveRack</strong> (FOH → PA): right program loaded, outputs unmuted, and you know how to bypass to a known-good state</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
 
@@ -478,5 +554,21 @@
   </footer>
 
 </div>
+
+<script>
+  // Dark-mode toggle: reads the theme the head script already set, flips + persists it.
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sync() { btn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; }
+    sync();
+    btn.addEventListener('click', function () {
+      var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', t);
+      try { localStorage.setItem('rpb_theme', t); } catch (e) {}
+      sync();
+    });
+  })();
+</script>
 </body>
 </html>
