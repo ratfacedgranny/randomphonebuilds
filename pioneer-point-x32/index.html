@@ -463,19 +463,23 @@
 
   <section id="monitors">
     <h2><span class="num">4</span>Monitor desk</h2>
-    <p class="section-sub">For your monitor engineer. This is X32 #1 — its own desk, its own preamps.</p>
+    <p class="section-sub">This is X32 #1 — its own desk, its own preamps. Each wedge / IEM is one mix bus (Mix 1, Mix 2, Mix 3…), and each bus is one person's monitor.</p>
+
+    <p>If you already run a QU32 (or any monitor desk), you already know this workflow — the X32 just labels one button differently. On the QU you hit a <strong>Mix</strong> master button and the faders flip to show that mix's levels; you fly the faders to build that person's wedge, then hit the next Mix and do the next person. The X32 does exactly the same thing:</p>
+
     <div class="callout warn">
-      <div class="callout-head">Keep monitor sends PRE-FADER</div>
-      <p>Not because of FOH — the split already guarantees the two desks can't touch each other. Pre-fader here keeps each wedge mix independent of <em>this desk's own</em> channel faders, so a stray fader move can't rewrite someone's mix mid-song.</p>
+      <div class="callout-head">This is your mix-on-faders workflow — the X32 button is "Sends on Fader"</div>
+      <p>Press <strong>Sends on Fader</strong>, select the mix bus for that person's wedge, and your channel faders become the <em>sends</em> into that one wedge. Build it, then select the next bus and the faders become that wedge's sends. One wedge at a time, faders the whole way — identical to hitting Mix&nbsp;1, Mix&nbsp;2, Mix&nbsp;3 on the QU.</p>
     </div>
-    <p><strong>Why the split doesn't change this:</strong> with two separate consoles on a splitter snake, FOH fader moves can never reach the monitor mixes — that was never the risk. Pre-fader is about what happens on the monitor desk <em>itself</em>: with post-fader sends, nudging one channel fader shifts that channel in every wedge it feeds at once. Pre-fader means the faders can sit anywhere (or go untouched) and the mixes hold.</p>
+
+    <p><strong>Why "pre-fader" matters — it's what makes that workflow behave:</strong> the faders you fly in that mode are the sends, and those sends need to be <strong>pre-fader</strong>. That's the setting that keeps each wedge independent: when you're in Mix&nbsp;3 and pull the vocal down, it drops <em>only</em> in Mix&nbsp;3 — Mix&nbsp;1, 2, 4, 5 don't move. If a bus is set post-fader instead, the sends get chained to each channel's main fader and the wedges start dragging each other around. Your QU defaults to pre-fader for monitor sends; on the X32 you set it yourself, so check it.</p>
+
     <ul>
-      <li>Channel sends to the monitor buses: <strong>pre-fader</strong></li>
-      <li>Bus <strong>output tap: post-fader</strong>, so the bus master fader still controls wedge volume</li>
+      <li><strong>Channel sends to the monitor buses: pre-fader</strong> — so the wedges stay independent (this is the whole ballgame)</li>
+      <li>Bus <strong>output tap: post-fader</strong>, so the bus <strong>master</strong> fader still sets that whole wedge's volume — "turn the drummer's wedge down" is one fader, the Mix bus master</li>
       <li><strong>Limiter on every monitor bus</strong>, threshold below −3 dBFS — cheap insurance against a dropped mic or a feedback squeal going straight into someone's ears</li>
-      <li><strong>Sends on Fader</strong> is the fast way to build a mix: hold the bus's select button, then the faders become that bus's sends. This is how monitor mixes get built quickly at line check.</li>
+      <li>The channel's <em>own</em> fader (normal view, not Sends-on-Fader) does almost nothing here — park it at unity and leave it</li>
     </ul>
-    <p style="font-size:0.92rem; color:var(--text-secondary)">If your monitor engineer would rather run post-fader and use the channel faders as per-mix trims, that's a legitimate choice — just know the tradeoff above and keep faders parked once the show starts.</p>
   </section>
 
   <section id="scenes">
