@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-07-20">
+<title>Festival Run Report — July 2026</title>
+<script>
+  // Set theme before paint to avoid a flash. Stored choice wins; else follow the OS.
+  (function () {
+    try {
+      var s = localStorage.getItem('rpb_theme');
+      var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', s || (d ? 'dark' : 'light'));
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<link rel="icon" href="data:,">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --accent-soft: rgba(196, 32, 32, 0.06);
+    --on-accent: #FFFFFF;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --code-bg: #F0F0F2;
+    --warn-bg: #FFF6E9;
+    --warn-border: #E8A13C;
+    --warn-ink: #9A5B12;
+    --ok: #2E7D46;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --accent: #FF6B5E;
+    --accent-soft: rgba(255, 107, 94, 0.10);
+    --on-accent: #201014;
+    --bg: #161619;
+    --card-bg: #1F1F24;
+    --text-primary: #F5F5F7;
+    --text-secondary: #A1A1A6;
+    --divider: #34343C;
+    --code-bg: #2A2A31;
+    --warn-bg: #2A2214;
+    --warn-border: #E8A13C;
+    --warn-ink: #F0B45C;
+    --ok: #4ADE80;
+    color-scheme: dark;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .top-bar { height: 3px; background: var(--accent); }
+
+  /* Dark-mode toggle */
+  .theme-toggle {
+    position: fixed;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 50;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, border-color 0.2s ease;
+  }
+  .theme-toggle:hover { transform: scale(1.06); border-color: var(--accent); }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5rem) clamp(1.25rem, 4vw, 2rem) 5rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; }
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 0.6rem;
+  }
+  .lede {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+  .disclaimer {
+    margin: 1.75rem 0 0;
+    padding: 0.9rem 1.1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .disclaimer strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Table of contents */
+  nav.toc {
+    margin: 2.5rem 0;
+    padding: 1.1rem 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+  }
+  nav.toc p {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+  }
+  nav.toc ol { list-style: none; counter-reset: toc; }
+  nav.toc li { counter-increment: toc; }
+  nav.toc a {
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.35rem 0;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: color 0.15s ease;
+  }
+  nav.toc a::before {
+    content: counter(toc);
+    color: var(--accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 1.1em;
+  }
+  nav.toc a:hover { color: var(--accent); }
+
+  /* Sections */
+  section { margin-top: 3rem; scroll-margin-top: 1.5rem; }
+  h2 {
+    font-size: clamp(1.35rem, 3.5vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  h2 .num {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.5rem;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 1.75rem 0 0.5rem;
+  }
+  .section-sub {
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  p { margin-bottom: 1rem; }
+  strong { font-weight: 600; }
+  a { color: var(--accent); }
+
+  ul, ol { margin: 0 0 1rem 0; padding-left: 1.3rem; }
+  li { margin-bottom: 0.45rem; }
+  li::marker { color: var(--text-secondary); }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    background: var(--code-bg);
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+    padding: 0.08rem 0.38rem;
+    white-space: nowrap;
+  }
+
+  /* Callouts */
+  .callout {
+    margin: 1.5rem 0;
+    padding: 1.1rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.97rem;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .callout-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .callout.warn {
+    background: var(--warn-bg);
+    border: 1px solid rgba(232, 161, 60, 0.5);
+    border-left: 3px solid var(--warn-border);
+  }
+  .callout.warn .callout-head { color: var(--warn-ink); }
+  .callout.danger {
+    background: var(--accent-soft);
+    border: 1px solid rgba(196, 32, 32, 0.3);
+    border-left: 3px solid var(--accent);
+  }
+  .callout.danger .callout-head { color: var(--accent); }
+
+  /* Fix card — problem + resolution */
+  .fix {
+    counter-increment: fix;
+    position: relative;
+    padding: 1.15rem 1.25rem 1.15rem 3.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    margin-bottom: 0.85rem;
+  }
+  .fix::before {
+    content: counter(fix);
+    position: absolute;
+    left: 0.85rem;
+    top: 1.05rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .fix .fix-title { font-weight: 600; display: block; margin-bottom: 0.3rem; }
+  .fix p { margin-bottom: 0.5rem; }
+  .fix p:last-child { margin-bottom: 0; }
+  .fix .verdict { font-weight: 600; color: var(--ok); }
+  .fixlist { counter-reset: fix; list-style: none; padding: 0; margin: 1.25rem 0; }
+
+  /* Steps */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 1.25rem 0; }
+  .steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: 1rem 1rem 1rem 3.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0.85rem;
+    top: 0.95rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .steps .step-title { font-weight: 600; display: block; margin-bottom: 0.3rem; }
+  .steps ul { margin: 0.5rem 0 0; }
+  .steps ul li { margin-bottom: 0.3rem; font-size: 0.94rem; }
+
+  .divider-rule { border: none; border-top: 1px solid var(--divider); margin: 3rem 0 0; }
+
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+  footer a { color: var(--text-secondary); }
+  footer a:hover { color: var(--accent); }
+  .back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back:hover { text-decoration: underline; }
+
+  @media (max-width: 500px) {
+    code { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+<div class="top-bar"></div>
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Live Sound · Show Report</p>
+    <h1>Festival Run Report</h1>
+    <p class="lede">July 16–20, 2026 — new S32 digital-split rig, a week of gremlins, and a storm. A plain-English rundown of what broke and what fixed it.</p>
+    <p class="disclaimer">A record of one festival run, written up after the fact. <strong>Zach is the engineer; this is a memory aid, not a manual.</strong> Menu paths are for the X32/S32 rig described here.</p>
+  </header>
+
+  <nav class="toc">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#rig">The big change — new rig</a></li>
+      <li><a href="#fixes">Problems we chased, and what fixed each</a></li>
+      <li><a href="#skills">Things worth keeping — how-tos</a></li>
+      <li><a href="#quick">Quick answers</a></li>
+      <li><a href="#storm">The storm — the serious one</a></li>
+      <li><a href="#open">Still open</a></li>
+    </ol>
+  </nav>
+
+  <section id="rig">
+    <h2><span class="num">1</span>The big change — new rig</h2>
+    <p class="section-sub">From an analog splitter snake to a single digital stage box feeding both desks.</p>
+    <p>The rig switched to a single <strong>S32 stage box split digitally over AES50</strong> to both consoles:</p>
+    <ul>
+      <li><strong>FOH console → AES50 port A</strong></li>
+      <li><strong>Monitor console → AES50 port B</strong></li>
+    </ul>
+    <p>Two things this changed that matter going forward:</p>
+    <div class="callout warn">
+      <div class="callout-head">⚠️ Both desks now share the S32's preamps</div>
+      <p>There's only one preamp per channel, and whoever touches the gain last wins. The call: <strong>FOH owns gain</strong> — the monitor desk leaves preamps alone. Safe the preamp on the monitor desk so a scene recall can't grab it.</p>
+    </div>
+    <p>Also: the old "phantom power only on the direct leg" rule is <strong>gone</strong> — that was an analog-splitter thing. Phantom is just a normal check now.</p>
+    <div class="callout warn">
+      <div class="callout-head">⚠️ Clock: one master only</div>
+      <p>AES50 needs exactly one clock master. The right setup is <strong>FOH = Internal (master)</strong> → <strong>S32 slaves to port A</strong> → <strong>Monitor desk slaves to port B</strong>. Clock problems usually sound like clicks, ticks, or dropouts — not clean silence.</p>
+    </div>
+  </section>
+
+  <section id="fixes">
+    <h2><span class="num">2</span>Problems we chased, and what fixed each</h2>
+    <p class="section-sub">Five faults, in the order they showed up.</p>
+    <ol class="fixlist">
+      <li class="fix">
+        <span class="fix-title">Mic barely showing signal even with gain maxed</span>
+        <p>Turned out to be a <strong>bad cable at the stage box</strong> — not electronics. The thing that looks like every problem at once. Always worth ruling out early.</p>
+        <p class="verdict">Fixed: swapped the cable.</p>
+      </li>
+      <li class="fix">
+        <span class="fix-title">Signal into the channel and the send, but nothing out of the Mix 1 wedge</span>
+        <p>This was on the <strong>output side</strong>, not the desk. Seeing signal on the <em>send</em> only proves the channel feeds the bus — check whether the <strong>bus master meter</strong> actually moves to know if the bus itself is passing.</p>
+        <p class="verdict">Fixed on the output side.</p>
+      </li>
+      <li class="fix">
+        <span class="fix-title">Mix bus 1 passed sound even with its fader all the way down</span>
+        <p>The <strong>output tap point</strong> was set to <em>pre-fader</em>, so the fader was doing nothing. Set it back to <strong>post-fader</strong> and it behaved.</p>
+        <p>Worth remembering: monitor buses want <strong>sends pre-fader</strong> but the <strong>output tap post-fader</strong> — two pre/post settings that want opposite answers. Easy to cross up while chasing a no-output problem.</p>
+        <p class="verdict">Fixed: tap point → post-fader.</p>
+      </li>
+      <li class="fix">
+        <span class="fix-title">Mains went silent — LEDs and signal path looked fine</span>
+        <p>Ruled out the DriveRack. Clean silence with good meters usually means it's <strong>downstream of the DSP</strong> — the output patch, or the stage box pulling its outputs from the wrong AES50 port. The show came back up.</p>
+        <p><em>The exact cause never got logged — worth confirming next time.</em></p>
+      </li>
+      <li class="fix">
+        <span class="fix-title">Clock setup was backwards for a while</span>
+        <p>The monitor desk was on internal while FOH was slaving to AES50, leaving the chain without a clear single master. Corrected to FOH-as-master (see the rig section above).</p>
+        <p class="verdict">Fixed: FOH internal, both others slaved.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="skills">
+    <h2><span class="num">3</span>Things worth keeping — how-tos</h2>
+    <p class="section-sub">The stuff we set up that you'll want to do again.</p>
+
+    <h3>Reverb</h3>
+    <p>Feed it from a send bus (bus 13 → FX 1 by default), set that send <strong>post-fader</strong>, load the reverb on the FX page, bring up the <strong>FX return</strong> and assign it to the mains, then send channels to it. High-pass the return around 200–300 Hz to keep it from turning to mud.</p>
+
+    <h3>Saving a scene</h3>
+    <p>Save to an empty slot, name it something you'd recognize cold, and <strong>back it up to USB</strong>. Safes have <strong>nothing to do with saving</strong> — they only matter at <strong>recall</strong>, where they decide what a scene load is allowed to overwrite. Set them (Routing I/O, Output Patch, Preamp) before your first between-bands recall.</p>
+
+    <h3>Proper shutdown</h3>
+    <ol class="steps">
+      <li><span class="step-title">Amps off first</span>Always. Never power the desk down with amps live — that's how you thump the PA.</li>
+      <li><span class="step-title">Phantom off, then the rest</span>Kill +48V, stop and eject any USB recording, confirm the scene saved, then consoles and S32 off.</li>
+      <li><span class="step-title">Power up in reverse</span>Everything else first, <strong>amps last</strong>, once the network has settled.</li>
+    </ol>
+
+    <h3>Locking the surface</h3>
+    <p><code>Setup → Global</code> → Lock. It stops accidental bumps, but there's no password — it's a "don't touch," not real security.</p>
+  </section>
+
+  <section id="quick">
+    <h2><span class="num">4</span>Quick answers</h2>
+    <p class="section-sub">One-off questions that came up during the run.</p>
+    <ul>
+      <li><strong>iPad + Mix Station:</strong> wire the console to the router, get both the desk and iPad on the same network and subnet, connect. A "not in same subnet" error with matching IPs usually means a VPN or cellular path on the iPad — force-quitting the app cleared it.</li>
+      <li><strong>Clip light stuck on but the meter looks fine:</strong> that's a <strong>latched peak indicator</strong> holding a past clip so you don't miss it. Clear it and watch — only act if it re-lights while someone's playing.</li>
+      <li><strong>Router near the IEMs:</strong> the cable and data won't touch your audio. The only real concern is the router's <strong>Wi-Fi radio</strong> sitting inches from IEM antennas — give it a foot or two of separation (unless the IEMs are 2.4 GHz digital, then lock the router to 5 GHz).</li>
+    </ul>
+  </section>
+
+  <section id="storm">
+    <h2><span class="num">5</span>The storm — the serious one</h2>
+    <p class="section-sub">Wet mains, a tripped GFCI, and a flash of white noise on transients.</p>
+    <p>The mains got wet in a storm and it <strong>tripped a GFCI</strong>. Afterward, vocal and drum transients caused a <strong>flash of white noise</strong>. We traced it to <strong>two bottom QSC line array boxes that got wet</strong>. The <strong>second box from the top on stage left</strong> had its <strong>Limit and Standby lights solid</strong> — its amp module had gone into <strong>protection</strong> — and it was <strong>arcing on transients</strong> (a flashover when peaks pushed current through where the water was).</p>
+    <div class="callout danger">
+      <div class="callout-head">🛑 A GFCI trip is a safety line, not just a gear problem</div>
+      <p>A trip means water bridged something live to ground. A powered box's amp module runs on line voltage internally, so a wet one that's arcing is a genuine shock/fire risk. That box got <strong>pulled from service</strong> — the right call.</p>
+    </div>
+    <p><strong>Drying the wet boxes:</strong> they need to dry for <strong>days</strong>, in warm dry moving air, and ideally a tech's eyes before they see real load again. No heat gun, no "seems fine, repower it." Water plus a powered amp module is exactly the thing that fails <em>after</em> it dried wrong.</p>
+    <p><strong>When boxes drop out of an array:</strong> don't crank the survivors to compensate — you just walk them into their own limiters and stress gear on a bad night. Reset system gain for the array you actually have.</p>
+  </section>
+
+  <section id="open">
+    <h2><span class="num">6</span>Still open</h2>
+    <ul>
+      <li>What exactly brought the <strong>mains back</strong> after they went silent (fault 4) — never logged.</li>
+      <li>The <strong>X32 field guide</strong> on this site still describes the <em>old analog rig</em> and is now wrong in a few places. Needs a rewrite when there's time.</li>
+    </ul>
+  </section>
+
+  <hr class="divider-rule">
+  <footer>
+    <p>Festival run July 16–20, 2026. Rough week of weather and gear — but the hard ones (the tap point, the wet array box) got diagnosed in the room.</p>
+    <a class="back" href="../">← Back to randomphonebuilds</a>
+  </footer>
+
+</div>
+<script>(function(){var r=document.documentElement,b=document.getElementById('themeToggle');function s(){b.textContent=r.getAttribute('data-theme')==='dark'?'☀️':'🌙';}s();b.addEventListener('click',function(){var t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);try{localStorage.setItem('rpb_theme',t);}catch(e){}s();});})();</script>
+</body>
+</html>
