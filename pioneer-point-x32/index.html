@@ -451,14 +451,7 @@
       <p style="margin-top:0.6rem">A comp sitting at 4:1 with a 30 ms attack and RMS detection feels like protection and isn't. Same reasoning applies to the Main LR comp covering the arrays.</p>
     </div>
 
-    <div class="callout danger">
-      <div class="callout-head">⚠ The EXT SUB switch — check it every time</div>
-      <p>The <strong>EXT SUB</strong> switch on the line arrays engages their <strong>high-pass filter</strong>: "an external sub is covering the bottom, stop trying to reproduce it."</p>
-      <p style="margin-top:0.6rem"><strong>Left off while the subs are running,</strong> the arrays keep reproducing low end the subs are <em>also</em> reproducing — thick muddy overlap through the crossover region, phase cancellation where the two sources fight, and wasted array excursion on frequencies they shouldn't be working on.</p>
-      <p style="margin-top:0.6rem"><strong>This is a silent failure.</strong> Nothing breaks, nothing meters wrong, no light comes on. It just sounds worse than it should — and the tempting fix is to start pulling low end out on the desk, which treats the symptom. <strong>Check the physical switch before you touch an EQ.</strong></p>
-    </div>
-
-    <p><strong>EXT SUB should be ON here.</strong> Aux-fed means the arrays and subs are fed separately, so the arrays are getting full-range Main L/R with nothing else high-passing them. That's exactly the case the switch exists for. (If the subs were instead feeding the arrays through a high-passed thru output, adding EXT SUB on top would double high-pass them and thin the low mids — but that's not this rig.)</p>
+    <p>The arrays have an <strong>EXT SUB</strong> switch that engages their high-pass when an external sub is covering the bottom. That's set — nothing to do with it on the desk.</p>
 
     <p><strong>Sub polarity switch (0 / 180).</strong> Most powered subs have one, and it matters at the crossover point where arrays and subs overlap. If the low end sounds thin or scooped right around the crossover, flip it and keep whichever is louder there. Aux-fed makes this easy to test: solo the kick, walk the crossover region, flip the switch, keep the louder one.</p>
   </section>
@@ -677,7 +670,7 @@
       <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
       <li><span class="box"></span><span>Wedges patched to the <strong>monitor desk's own outs</strong>, not the S32's</span></li>
       <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
-      <li><span class="box"></span><span><strong>EXT SUB switch ON on the line arrays</strong> — and sub polarity checked (section 1)</span></li>
+      <li><span class="box"></span><span><strong>Sub polarity checked</strong> at the crossover (section 1)</span></li>
       <li><span class="box"></span><span><strong>Sub / fill aux comps verified as limiters</strong> — PEAK detection, high ratio, fast attack, threshold set at gig level</span></li>
       <li><span class="box"></span><span><strong>Delays confirmed</strong> — mains at 0 as the reference, fills held back to match</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
