@@ -383,7 +383,7 @@
       <li><a href="#headamps">Head amps — where FOH gain really lives</a></li>
       <li><a href="#no-audio">No audio — the fast tree</a></li>
       <li><a href="#monitors">Monitor desk</a></li>
-      <li><a href="#vocal">Lead vocal — the Combinator insert</a></li>
+      <li><a href="#channels">Channel processing — vocal, guitars, toms</a></li>
       <li><a href="#scenes">Scenes &amp; safes — the festival killer</a></li>
       <li><a href="#checklist">Before you leave the house</a></li>
     </ol>
@@ -633,9 +633,12 @@
     </div>
   </section>
 
-  <section id="vocal">
-    <h2><span class="num">6</span>Lead vocal — the Combinator insert</h2>
-    <p class="section-sub">Multiband compression on the lead vocal — "Vocal 2", channel 16. Loaded as an <strong>insert</strong>, not an FX send, so the whole vocal goes through it with no parallel blend.</p>
+  <section id="channels">
+    <h2><span class="num">6</span>Channel processing</h2>
+    <p class="section-sub">Settings dialed for this rig. All of them assume the head amps have already been audited (section 3) — every threshold below is referenced to gain, so if the gain moves, these move with it.</p>
+
+    <h3 style="margin-top:1.5rem">Lead vocal — Combinator insert, ch 16</h3>
+    <p>Multiband compression on the lead vocal — "Vocal 2". Loaded as an <strong>insert</strong>, not an FX send, so the whole vocal goes through it with no parallel blend.</p>
 
     <h3>Patching it in</h3>
     <ul>
@@ -691,6 +694,44 @@
     </div>
 
     <p style="color:var(--text-secondary)">All of the above is a starting patch, not a mix. The thresholds and offsets are ear work — these numbers just get you somewhere sane fast.</p>
+
+    <hr class="divider-rule" style="margin:2.5rem 0 0">
+
+    <h3 style="margin-top:2rem">Guitars — compressor</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Control</th><th>Set to</th><th>What it's doing</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Attack</strong></td><td><strong>0.10 ms</strong></td><td>About as fast as it goes — clamps the pick transient rather than letting it through. Deliberate: it buys a consistent rhythm bed that sits still under the vocal.</td></tr>
+          <tr><td><strong>Hold</strong></td><td><strong>3 ms</strong></td><td>Short. Just enough to stop it chattering between picked notes.</td></tr>
+          <tr><td><strong>Release</strong></td><td><strong>65 ms</strong></td><td>Quick — recovers fast enough to stay lively and not pump on strummed chords.</td></tr>
+          <tr><td><strong>Threshold</strong></td><td>by ear</td><td>Still to set. Down until it's catching the loud strums, not riding constantly.</td></tr>
+          <tr><td><strong>Ratio / Knee</strong></td><td>by ear</td><td>Still to set. With an attack this fast, a moderate ratio goes a long way — start low and work up.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--text-secondary)">Worth knowing what a 0.10 ms attack costs: you lose pick definition along with the transient. If the guitars end up sounding dull or buried rather than steady, that's the first number to walk back.</p>
+
+    <hr class="divider-rule" style="margin:2.5rem 0 0">
+
+    <h3 style="margin-top:2rem">Toms — gates, ch 3–5</h3>
+    <p>T1 on ch 3, T2 on ch 4, T3 on ch 5.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Control</th><th>Set to</th><th>What it's doing</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Range</strong></td><td><strong>24 dB</strong></td><td>The "−24 dB floor". Range is how far the gate attenuates when closed, so the toms sit 24 dB down between hits instead of going dead silent. Keeps the kit glued while still controlling bleed.</td></tr>
+          <tr><td><strong>Threshold</strong></td><td>by ear, <strong>per tom</strong></td><td>These will <em>not</em> be the same across the three. The rack tom picks up far more snare bleed than the floor tom.</td></tr>
+          <tr><td><strong>Attack</strong></td><td>fastest</td><td>Suggested. A slow gate attack eats the stick hit — the whole point of the drum.</td></tr>
+          <tr><td><strong>Hold</strong></td><td>~100–300 ms</td><td>Suggested. Long enough to ride through the tom's ring, or the gate chatters mid-decay.</td></tr>
+          <tr><td><strong>Release</strong></td><td>~250–500 ms</td><td>Suggested. Slow enough that the tail fades instead of being chopped off.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="callout-head">Range is the same on all three; threshold isn't</div>
+      <p>Set Range to 24 dB across ch 3–5 and leave it. Then set each threshold individually at line check, with the drummer playing the whole kit — not one tom at a time. Bleed is what you're gating against, so you need the bleed present to set it.</p>
+    </div>
   </section>
 
   <section id="scenes">
@@ -760,6 +801,8 @@
       <li><span class="box"></span><span><strong>Delays confirmed</strong> — mains at 0 as the reference, fills held back to match</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
       <li><span class="box"></span><span><strong>Ch16 Combinator insert loaded and set</strong> — FX 5–8 slot, insert ON and POST, Mix 100%, band offsets dialed (section 6). <code>Band Solo</code> not left engaged.</span></li>
+      <li><span class="box"></span><span><strong>Guitar comp</strong> — 0.10 ms attack / 3 ms hold / 65 ms release; threshold and ratio set by ear</span></li>
+      <li><span class="box"></span><span><strong>Tom gates ch 3–5</strong> — Range 24 dB on all three; <strong>thresholds set per tom</strong> with the full kit playing</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
 
