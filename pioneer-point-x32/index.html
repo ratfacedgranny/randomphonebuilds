@@ -428,7 +428,7 @@
     <ul>
       <li><strong>The Main LR limiter doesn't cover them.</strong> They never pass through Main L/R. This is handled — there are compressors on those auxes acting as limiters — but see the note below on setting them so they actually limit.</li>
       <li><strong>The Main LR insert GEQ doesn't reach them either.</strong> System EQ for subs and fills has to live on those buses.</li>
-      <li><strong>Mid fills need delay.</strong> They're closer to the audience than the arrays, so their sound arrives early and has to be held back. See below — the current setting needs rebuilding.</li>
+      <li><strong>Mid fills need delay.</strong> They're closer to the audience than the arrays, so their sound arrives early and has to be held back.</li>
     </ul>
 
     <div class="callout warn">
@@ -446,10 +446,36 @@
 
     <div class="callout danger">
       <div class="callout-head">⚠ A compressor is only a limiter if it's set like one</div>
-      <p>The comps on the sub and fill auxes are the only thing protecting those drivers now that the DriveRack is gone. Worth confirming they're set to actually limit:</p>
-      <p style="margin-top:0.6rem"><strong>Detection = PEAK, not RMS.</strong> This is the one that matters most — RMS averages over a window and sails right past the fast transient you're trying to catch. Then <strong>ratio as high as it goes</strong>, <strong>fast attack</strong> (a slow attack lets the loudest part of the transient through, which is the part that does damage), <strong>hard knee</strong>, and a <strong>threshold set at gig level with the real amps</strong>.</p>
-      <p style="margin-top:0.6rem">A comp sitting at 4:1 with a 30 ms attack and RMS detection feels like protection and isn't. Same reasoning applies to the Main LR comp covering the arrays.</p>
+      <p>The comps on the sub and fill auxes are the only thing protecting those drivers now that the DriveRack is gone. A comp sitting at 4:1 with a 30 ms attack and RMS detection feels like protection and isn't.</p>
     </div>
+
+    <p>Starting values. <strong>Threshold is the one you set by level</strong>, at the gig, with the real amps — everything else can be dialed in advance.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Parameter</th><th>Sub bus</th><th>Mid fill bus</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Det</strong> (detection)</td><td><strong>PEAK</strong></td><td><strong>PEAK</strong></td><td>⚠ The critical one. RMS averages over a window and sails straight past the fast transient you're trying to catch.</td></tr>
+          <tr><td><strong>Ratio</strong></td><td>100:1 (max)</td><td>100:1 (max)</td><td>A limiter is a comp at a brickwall ratio. Single digits is compression, not protection.</td></tr>
+          <tr><td><strong>Knee</strong></td><td>0 (hard)</td><td>0 (hard)</td><td>A soft knee eases in gradually — musical for a comp, wrong for a protection ceiling.</td></tr>
+          <tr><td><strong>Attack</strong></td><td>0–1 ms</td><td>0–1 ms</td><td>A slow attack lets the first and loudest part of the transient through, which is the part that does the damage.</td></tr>
+          <tr><td><strong>Hold</strong></td><td>min (0.02 ms)</td><td>min (0.02 ms)</td><td>Hold keeps it clamped after the peak has passed. You don't want that on a limiter.</td></tr>
+          <tr><td><strong>Release</strong></td><td><strong>~150 ms</strong></td><td><strong>~60 ms</strong></td><td>Subs need a slower release than fills — see below.</td></tr>
+          <tr><td><strong>Gain</strong> (makeup)</td><td>0 dB</td><td>0 dB</td><td>⚠ Makeup gain on a protection limiter defeats the entire point.</td></tr>
+          <tr><td><strong>Mix</strong></td><td>100%</td><td>100%</td><td>⚠ Anything under 100% blends unlimited dry signal back in and it stops being a ceiling.</td></tr>
+          <tr><td><strong>Threshold</strong></td><td>by level</td><td>by level</td><td>Set so it only catches the loudest transients — a few dB of reduction at most. A threshold that never engages is decoration.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-head">Why the sub release is slower</div>
+      <p>Low frequencies have long periods. A 40&nbsp;Hz wave is <strong>25 ms per cycle</strong>, so a release faster than about 50 ms starts modulating the waveform <em>within a single cycle</em> — that's audible distortion, not clean limiting. Fills are running mids and highs with much shorter periods, so they can release faster and stay transparent. This is the one place not to copy the sub settings across.</p>
+    </div>
+
+    <p>Same reasoning applies to the <strong>Main LR</strong> comp protecting the arrays — use the fill column.</p>
 
     <p>The arrays have an <strong>EXT SUB</strong> switch that engages their high-pass when an external sub is covering the bottom. The boxes handle their own crossover and alignment — none of it is a desk item.</p>
   </section>
@@ -668,7 +694,8 @@
       <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
       <li><span class="box"></span><span>Wedges patched to the <strong>monitor desk's own outs</strong>, not the S32's</span></li>
       <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
-      <li><span class="box"></span><span><strong>Sub / fill aux comps verified as limiters</strong> — PEAK detection, high ratio, fast attack, threshold set at gig level</span></li>
+      <li><span class="box"></span><span><strong>Sub / fill aux comps set as limiters</strong> — PEAK detection, 100:1, hard knee, 0–1 ms attack, Gain 0, Mix 100%, release ~150 ms subs / ~60 ms fills (section 1 table)</span></li>
+      <li><span class="box"></span><span><strong>Limiter thresholds set at gig level</strong> with the real amps — not in the shop</span></li>
       <li><span class="box"></span><span><strong>Delays confirmed</strong> — mains at 0 as the reference, fills held back to match</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
