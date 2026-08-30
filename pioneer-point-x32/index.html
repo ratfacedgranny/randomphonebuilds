@@ -424,6 +424,26 @@
     <h3>The PA side — crossover lives in the boxes</h3>
     <p>There's no DriveRack in the chain, so FOH's Main L/R goes straight to the amps. That's fine, because <strong>the subs and the line arrays have their own crossovers built in</strong> — nothing on the desk needs to split mains from subs.</p>
 
+    <p><strong>The subs and mid fills are aux-fed</strong> — they come off mix buses on the FOH desk, not off Main L/R, so you choose what goes to the subs rather than sending them the whole mix. Three things follow from that:</p>
+    <ul>
+      <li><strong>The Main LR limiter doesn't cover them.</strong> They never pass through Main L/R. This is handled — there are compressors on those auxes acting as limiters — but see the note below on setting them so they actually limit.</li>
+      <li><strong>The Main LR insert GEQ doesn't reach them either.</strong> System EQ for subs and fills has to live on those buses.</li>
+      <li><strong>Mid fills usually need delay.</strong> They're closer to the audience than the arrays, so their sound arrives early. Align them with the X32's output delay or they smear the image and pull it toward the front of the room.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-head">Two buses, opposite pre/post answers</div>
+      <p>Sends to the <strong>aux-fed sub and fill buses want POST-fader</strong> — so pulling the kick fader down pulls it down in the subs too, and one fader move keeps the mix coherent. Pre-fader and you'd be mixing the same source in two places all night.</p>
+      <p style="margin-top:0.6rem">But the <strong>monitor buses want sends PRE-fader</strong> (section 5). Same console, same menu, opposite correct value. Know which bus you're looking at before you change a pre/post setting. Bus <strong>output taps</strong> stay post-fader either way, so the bus master fader still works.</p>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-head">⚠ A compressor is only a limiter if it's set like one</div>
+      <p>The comps on the sub and fill auxes are the only thing protecting those drivers now that the DriveRack is gone. Worth confirming they're set to actually limit:</p>
+      <p style="margin-top:0.6rem"><strong>Detection = PEAK, not RMS.</strong> This is the one that matters most — RMS averages over a window and sails right past the fast transient you're trying to catch. Then <strong>ratio as high as it goes</strong>, <strong>fast attack</strong> (a slow attack lets the loudest part of the transient through, which is the part that does damage), <strong>hard knee</strong>, and a <strong>threshold set at gig level with the real amps</strong>.</p>
+      <p style="margin-top:0.6rem">A comp sitting at 4:1 with a 30 ms attack and RMS detection feels like protection and isn't. Same reasoning applies to the Main LR comp covering the arrays.</p>
+    </div>
+
     <div class="callout danger">
       <div class="callout-head">⚠ The EXT SUB switch — check it every time</div>
       <p>The <strong>EXT SUB</strong> switch on the line arrays engages their <strong>high-pass filter</strong>: "an external sub is covering the bottom, stop trying to reproduce it."</p>
@@ -431,13 +451,9 @@
       <p style="margin-top:0.6rem"><strong>This is a silent failure.</strong> Nothing breaks, nothing meters wrong, no light comes on. It just sounds worse than it should — and the tempting fix is to start pulling low end out on the desk, which treats the symptom. <strong>Check the physical switch before you touch an EQ.</strong></p>
     </div>
 
-    <p><strong>Know how the subs are fed</strong>, because it decides what EXT SUB should be set to:</p>
-    <ul>
-      <li><strong>Desk → subs → high-passed thru → arrays:</strong> the sub's own crossover is already high-passing the arrays. Switching EXT SUB on as well may <strong>double</strong> high-pass them and thin out the low mids.</li>
-      <li><strong>Desk → arrays and subs separately:</strong> the arrays need EXT SUB <strong>on</strong> to high-pass themselves.</li>
-    </ul>
+    <p><strong>EXT SUB should be ON here.</strong> Aux-fed means the arrays and subs are fed separately, so the arrays are getting full-range Main L/R with nothing else high-passing them. That's exactly the case the switch exists for. (If the subs were instead feeding the arrays through a high-passed thru output, adding EXT SUB on top would double high-pass them and thin the low mids — but that's not this rig.)</p>
 
-    <p><strong>Sub polarity switch (0 / 180).</strong> Most powered subs have one, and it matters at the crossover point where arrays and subs overlap. If the low end sounds thin or scooped right around the crossover, flip it and keep whichever is louder there.</p>
+    <p><strong>Sub polarity switch (0 / 180).</strong> Most powered subs have one, and it matters at the crossover point where arrays and subs overlap. If the low end sounds thin or scooped right around the crossover, flip it and keep whichever is louder there. Aux-fed makes this easy to test: solo the kick, walk the crossover region, flip the switch, keep the louder one.</p>
   </section>
 
   <section id="phantom">
@@ -647,7 +663,9 @@
       <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
       <li><span class="box"></span><span>Wedges patched to the <strong>monitor desk's own outs</strong>, not the S32's</span></li>
       <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
-      <li><span class="box"></span><span><strong>EXT SUB switch set correctly on the line arrays</strong> — and sub polarity checked (section 1)</span></li>
+      <li><span class="box"></span><span><strong>EXT SUB switch ON on the line arrays</strong> — and sub polarity checked (section 1)</span></li>
+      <li><span class="box"></span><span><strong>Sub / fill aux comps verified as limiters</strong> — PEAK detection, high ratio, fast attack, threshold set at gig level</span></li>
+      <li><span class="box"></span><span><strong>Mid fills delay-aligned</strong> to the arrays</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
