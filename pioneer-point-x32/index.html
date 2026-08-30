@@ -420,6 +420,24 @@
     <p><strong>Two sets of preamps means two gain structures.</strong> Channel <em>numbering</em> has to match on both desks — so "gtr 2 is ringing in wedge 3" means the same thing to both of you — but the gain values won't read the same, and that's correct. Don't "fix" one to match the other.</p>
 
     <p>The only thing the two desks physically share is <strong>the mic signal and phantom power</strong>, which is what the next section is about.</p>
+
+    <h3>The PA side — crossover lives in the boxes</h3>
+    <p>There's no DriveRack in the chain, so FOH's Main L/R goes straight to the amps. That's fine, because <strong>the subs and the line arrays have their own crossovers built in</strong> — nothing on the desk needs to split mains from subs.</p>
+
+    <div class="callout danger">
+      <div class="callout-head">⚠ The EXT SUB switch — check it every time</div>
+      <p>The <strong>EXT SUB</strong> switch on the line arrays engages their <strong>high-pass filter</strong>: "an external sub is covering the bottom, stop trying to reproduce it."</p>
+      <p style="margin-top:0.6rem"><strong>Left off while the subs are running,</strong> the arrays keep reproducing low end the subs are <em>also</em> reproducing — thick muddy overlap through the crossover region, phase cancellation where the two sources fight, and wasted array excursion on frequencies they shouldn't be working on.</p>
+      <p style="margin-top:0.6rem"><strong>This is a silent failure.</strong> Nothing breaks, nothing meters wrong, no light comes on. It just sounds worse than it should — and the tempting fix is to start pulling low end out on the desk, which treats the symptom. <strong>Check the physical switch before you touch an EQ.</strong></p>
+    </div>
+
+    <p><strong>Know how the subs are fed</strong>, because it decides what EXT SUB should be set to:</p>
+    <ul>
+      <li><strong>Desk → subs → high-passed thru → arrays:</strong> the sub's own crossover is already high-passing the arrays. Switching EXT SUB on as well may <strong>double</strong> high-pass them and thin out the low mids.</li>
+      <li><strong>Desk → arrays and subs separately:</strong> the arrays need EXT SUB <strong>on</strong> to high-pass themselves.</li>
+    </ul>
+
+    <p><strong>Sub polarity switch (0 / 180).</strong> Most powered subs have one, and it matters at the crossover point where arrays and subs overlap. If the low end sounds thin or scooped right around the crossover, flip it and keep whichever is louder there.</p>
   </section>
 
   <section id="phantom">
@@ -629,6 +647,7 @@
       <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
       <li><span class="box"></span><span>Wedges patched to the <strong>monitor desk's own outs</strong>, not the S32's</span></li>
       <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
+      <li><span class="box"></span><span><strong>EXT SUB switch set correctly on the line arrays</strong> — and sub polarity checked (section 1)</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
