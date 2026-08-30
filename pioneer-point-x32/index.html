@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="published" content="2026-07-14">
-<title>X32 Field Guide — Pioneer Point Festival</title>
+<meta name="published" content="2026-08-30">
+<title>X32 Field Guide — Pioneer Point</title>
 <script>
   // Set theme before paint to avoid a flash. Stored choice wins; else follow the OS.
   (function () {
@@ -207,6 +207,24 @@
     white-space: nowrap;
   }
 
+  /* Signal-flow diagram */
+  .diagram {
+    margin: 1.5rem 0;
+    padding: 1.1rem 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  .diagram pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text-primary);
+    white-space: pre;
+  }
+  .diagram .hl { color: var(--accent); font-weight: 700; }
+
   /* Callouts */
   .callout {
     margin: 1.5rem 0;
@@ -255,7 +273,6 @@
     width: 1.7rem;
     height: 1.7rem;
     background: var(--accent);
-    color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -263,8 +280,8 @@
     font-size: 0.85rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+    color: var(--on-accent);
   }
-  .steps > li::before { color: var(--on-accent); }
   .steps .step-title { font-weight: 600; display: block; margin-bottom: 0.3rem; }
   .steps ul { margin: 0.5rem 0 0; }
   .steps ul li { margin-bottom: 0.3rem; font-size: 0.94rem; }
@@ -337,6 +354,7 @@
 
   @media (max-width: 500px) {
     code { white-space: normal; }
+    .diagram pre { font-size: 0.7rem; }
   }
 </style>
 </head>
@@ -348,15 +366,21 @@
   <header>
     <p class="eyebrow">Live Sound · Field Guide</p>
     <h1>X32 Field Guide</h1>
-    <p class="lede">Pioneer Point Festival, July 2026 — two X32s (FOH + monitors) on an analog splitter snake.</p>
+    <p class="lede">Pioneer Point — two X32s (FOH + monitors) on a hybrid analog-split / digital-snake rig.</p>
     <p class="disclaimer">Written from documentation, not from experience. <strong>Zach is the engineer; this is a fast-recall sheet, not a second opinion.</strong> If it contradicts what you're hearing in the room, trust the room.</p>
   </header>
+
+  <div class="callout warn">
+    <div class="callout-head">Revised August 30, 2026</div>
+    <p>The original version of this page described a <strong>pure analog split with a dbx DriveRack</strong> in the output chain. Both of those are now wrong. The rig is a <strong>hybrid</strong> — analog splitter to the monitor desk, S32 stage box to FOH over AES50 — and <strong>the DriveRack is out of the chain entirely.</strong> Sections 1, 2, 4 and 7 changed, and section 3 (head amps) is new.</p>
+  </div>
 
   <nav class="toc">
     <p>On this page</p>
     <ol>
-      <li><a href="#rig">Your rig — why it's the robust choice</a></li>
-      <li><a href="#phantom">Phantom power — settle it before doors</a></li>
+      <li><a href="#rig">The rig — how the split actually works</a></li>
+      <li><a href="#phantom">Phantom power &amp; grounding</a></li>
+      <li><a href="#headamps">Head amps — where FOH gain really lives</a></li>
       <li><a href="#no-audio">No audio — the fast tree</a></li>
       <li><a href="#monitors">Monitor desk</a></li>
       <li><a href="#scenes">Scenes &amp; safes — the festival killer</a></li>
@@ -365,58 +389,114 @@
   </nav>
 
   <section id="rig">
-    <h2><span class="num">1</span>Your rig — why it's the robust choice</h2>
-    <p class="section-sub">Analog splitter snake → two independent X32s.</p>
-    <p>This matters more than it sounds like it does. The alternative — sharing an S16/S32 stage box over AES50 — means the two desks <strong>share preamps</strong>. So when your monitor engineer rides gain to kill feedback, <strong>your FOH mix moves too.</strong> It's a classic X32 festival trap.</p>
-    <p>With an analog split:</p>
-    <ul>
-      <li><span class="pill-ok">✓</span> Each console has <strong>its own preamps</strong> — independent gain, no interference</li>
-      <li><span class="pill-ok">✓</span> <strong>No AES50 clock/sync</strong> between desks — nothing to misconfigure, nothing to drop out</li>
-      <li><span class="pill-ok">✓</span> Either desk can crash or reboot and <strong>the other one keeps working</strong></li>
-    </ul>
-    <p>The only thing the two desks physically share is <strong>the mic signal and phantom power</strong> — which is exactly what the next section is about.</p>
+    <h2><span class="num">1</span>The rig — how the split actually works</h2>
+    <p class="section-sub">Seismic analog splitter → one leg to the monitor desk, one leg to an S32 → FOH over AES50 A.</p>
 
-    <h3>The signal chain</h3>
-    <p>Stage mics &amp; DIs → <strong>splitter snake</strong>, which splits into two legs:</p>
+    <div class="diagram">
+<pre>stage mics / DIs
+      │
+      ▼
+<span class="hl">Seismic passive splitter</span>  (SARMSS-32x515)
+      │
+      ├── leg 1 ─────────────────▶  <span class="hl">monitor X32</span>   (its OWN local preamps)
+      │                                  └─▶ wedges / IEMs
+      │
+      └── leg 2 ─▶ <span class="hl">S32 stage box</span> ─ AES50 A ─▶  <span class="hl">FOH X32</span>
+                                             └─▶ Main L/R ─▶ amps ─▶ mains + subs</pre>
+    </div>
+
+    <p><strong>The split is analog, and it happens before any preamp.</strong> That single fact is what makes this rig behave the way it does:</p>
     <ul>
-      <li><strong>Monitor desk</strong> (X32 #1) → wedges / IEMs on stage</li>
-      <li><strong>FOH desk</strong> (X32 #2) → Main L/R out → <strong>dbx DriveRack</strong> → amps → mains + subs</li>
+      <li><span class="pill-ok">✓</span> <strong>Each console has its own preamps.</strong> The monitor desk uses its local inputs; FOH's preamps live in the S32. <strong>Gain is fully independent</strong> — ride gain on monitors to kill feedback and the FOH mix doesn't move. This is <em>not</em> how a shared-stage-box rig behaves.</li>
+      <li><span class="pill-ok">✓</span> <strong>No clock relationship between the desks.</strong> Only FOH is synced over AES50, to the S32. The monitor desk is standalone on its internal clock.</li>
+      <li><span class="pill-ok">✓</span> <strong>Failure isolation.</strong> Either desk can crash and the other keeps working. If AES50 A drops, FOH goes down and <strong>monitors keep running</strong> — the band still hears themselves while you fix it.</li>
     </ul>
-    <p>The <strong>DriveRack</strong> is the loudspeaker-management box between the FOH desk and the PA: it handles the crossover (splitting mains vs subs), system EQ, and protection limiting for the boxes. It's one more link in the output chain — it shows up again in the no-audio tree below.</p>
+
+    <div class="callout danger">
+      <div class="callout-head">⚠ The S32's outputs belong to FOH</div>
+      <p>The S32 is fed from FOH's AES50 port, so its analog outputs are FOH's. <strong>Wedges come off the monitor X32's own XLR outs — never the S32.</strong> Patch a wedge to an S32 output and the monitor desk will look completely correct while making no sound: meters move, sends look right, silence.</p>
+    </div>
+
+    <p><strong>Two sets of preamps means two gain structures.</strong> Channel <em>numbering</em> has to match on both desks — so "gtr 2 is ringing in wedge 3" means the same thing to both of you — but the gain values won't read the same, and that's correct. Don't "fix" one to match the other.</p>
+
+    <p>The only thing the two desks physically share is <strong>the mic signal and phantom power</strong>, which is what the next section is about.</p>
   </section>
 
   <section id="phantom">
-    <h2><span class="num">2</span>Phantom power — settle it before doors</h2>
+    <h2><span class="num">2</span>Phantom power &amp; grounding</h2>
+    <p class="section-sub">The splitter is a Seismic Audio SARMSS-32x515 — a hardwired passive Y. No isolation transformers, no ground-lift switches.</p>
+
     <div class="callout danger">
-      <div class="callout-head">⚠ The #1 thing that bites analog-split festivals</div>
-      <p>A splitter snake has a <strong>direct leg</strong> (hard-wired) and <strong>isolated leg(s)</strong> (transformer). Phantom power (+48V) only passes through the <strong>direct</strong> leg — transformers block DC.</p>
+      <div class="callout-head">⚠ Phantom passes to everything</div>
+      <p>There's no transformer to block DC, so +48V from either side reaches the mic <em>and</em> backs into the other side's preamp inputs.</p>
     </div>
+
     <p>So, before doors:</p>
     <ol>
-      <li>Find out <strong>which console is on the direct leg</strong> of your splitter.</li>
-      <li><strong>Only that console sends +48V.</strong> The other leaves phantom OFF on every channel.</li>
+      <li><strong>Exactly one side sends +48V.</strong> Not both, not "probably neither."</li>
+      <li>Decide which: the monitor desk's local preamps, or the <strong>S32's</strong> preamps on the FOH leg. Note that on the FOH side the phantom is coming from the stage box, not the console.</li>
       <li>Tell your monitor engineer explicitly. Agree out loud. Don't assume.</li>
     </ol>
-    <p><strong>If phantom is on the wrong leg:</strong> condensers and active DIs go dead or weird, and you'll waste twenty minutes at line check chasing a "bad channel" that isn't bad.</p>
-    <p><strong>If both desks send +48V:</strong> at best it's redundant; at worst you get noise or a fight between supplies through the split.</p>
+    <p><strong>If both sides send it:</strong> two supplies fighting each other through a hardwired split. Best case redundant; worst case noise and intermittent weirdness on condensers and active DIs that'll eat twenty minutes at line check.</p>
+
+    <h3>The bigger passive-split issue: grounding</h3>
+    <p>No transformers <strong>and no ground-lift switches</strong> means the two desks are <strong>galvanically tied together</strong> through the snake. Both audio grounds are one ground.</p>
+    <ul>
+      <li><strong>Put both desks on the same power distro / same circuit</strong> if there's any way to do it. Different circuits at different ground potentials = hum or buzz through the split, and there's no lift switch to break it.</li>
+      <li>If you get hum and can't share a circuit, the fix has to come from somewhere else: DI boxes with a <strong>ground lift</strong> on the offending sources, or an isolation transformer inline. The snake won't help you.</li>
+      <li><strong>Sort this at load-in, not at line check.</strong> It's a power-distro decision and it's much harder to fix once everything's run.</li>
+    </ul>
+
+    <h3>Minor: parallel input loading</h3>
+    <p>A passive Y puts two preamp inputs across one mic, so the mic sees roughly half the load. With bridging inputs this is a non-issue — still comfortably above what a 150–200&nbsp;Ω mic wants — but it's why you may read a hair less level than a single-desk setup. Don't chase it as a fault.</p>
+  </section>
+
+  <section id="headamps">
+    <h2><span class="num">3</span>Head amps — where FOH gain really lives</h2>
+    <p class="section-sub">FOH's head amps aren't in the desk. They're the S32's preamps, driven remotely over AES50 A — knob at FOH, actual analog gain in the box on stage.</p>
+
+    <div class="callout warn">
+      <div class="callout-head">First thing to check: is Gain Split engaged?</div>
+      <p>The X32 has a <strong>Gain Split</strong> mode. When it's <strong>ON</strong>, the channel strip's gain control becomes a <strong>digital trim, ±18 dB only</strong> — it is <em>not</em> touching the S32's analog preamp. The real head amp gain moves to <code>SETUP → Preamps</code> and can only be set there.</p>
+    </div>
+
+    <p>That matters because if Gain Split has been on, then setting "preamp" on the channel strip has really been riding an 18 dB digital window — while <strong>the S32's actual analog gains sat wherever they were last left.</strong> Channels can be badly under- or over-driving the S32's converters while looking completely reasonable on the desk.</p>
+
+    <h3>Three things to look at</h3>
+    <ol>
+      <li>Is <strong>Gain Split</strong> engaged on the FOH X32?</li>
+      <li>What are the <strong>actual S32 analog gains</strong> sitting at, on <code>SETUP → Preamps</code>?</li>
+      <li>Is <strong>HA Gain Remote</strong> off? That setting lets another console drive your gains over AES50 — and nothing else is on AES50 in this rig.</li>
+    </ol>
+
+    <div class="callout danger">
+      <div class="callout-head">Recommendation for this rig: turn Gain Split OFF</div>
+      <p>Gain Split exists so two consoles can share one stage box — one takes the analog gain, the other gets trim. <strong>This split is analog.</strong> The monitor desk has its own preamps and never needed trim, and nothing is competing for the S32. With Gain Split off, the FOH channel knob drives the S32's real head amp directly — which is what you probably think it's been doing all along.</p>
+    </div>
+
+    <p><strong>Do this before dialing anything else.</strong> Every gate threshold, compressor threshold and limiter setting on the desk is referenced to gain. Audit the head amps first, then dial — otherwise you set it all twice.</p>
+
+    <p>While you're in there, per channel: check <strong>low-cut / HPF</strong> (engaged? at what frequency? easy to leave on from a previous show), <strong>phase / polarity invert</strong>, and anything sitting at an extreme — channels pinned near 0 or +60 usually mean someone set it weird rather than set it deliberately. The S32's preamps can also be touched from its own front panel, so give the box a look if the FOH readings don't match what you're hearing.</p>
   </section>
 
   <section id="no-audio">
-    <h2><span class="num">3</span>No audio — the fast tree</h2>
+    <h2><span class="num">4</span>No audio — the fast tree</h2>
     <p class="section-sub">Work top to bottom. Don't skip — the answer is almost always higher up than you think.</p>
     <ol class="steps">
       <li>
         <span class="step-title">Is signal hitting the desk at all?</span>
         <ul>
           <li>Meter on the channel strip — any movement?</li>
-          <li>Gain up? Phantom on (if it's a condenser/active DI, and you're on the <em>direct</em> leg)?</li>
+          <li>Gain up? Phantom on, from whichever side owns it (section 2)?</li>
           <li>No meter → the problem is <strong>before</strong> the console: cable, mic, splitter, stage.</li>
         </ul>
       </li>
       <li>
-        <span class="step-title">Is the channel getting the right source?</span>
+        <span class="step-title">Is the channel getting the right source? (different answer on each desk)</span>
         <ul>
-          <li><code>ROUTING → Inputs</code> — is the block set to <strong>Local</strong> (your XLR ins)? Not Card, not AES50.</li>
+          <li><strong>Monitor desk:</strong> <code>ROUTING → Inputs</code> should be <strong>Local</strong> — its own XLR ins off the splitter.</li>
+          <li><strong>FOH desk:</strong> <code>ROUTING → Inputs</code> should be <strong>AES50 A</strong> — the S32. Not Local; nothing is plugged into FOH's own XLRs.</li>
+          <li>Getting these backwards is a fast way to have one desk stone dead at line check.</li>
           <li>Channel <code>Config</code> → is Source the input you think it is?</li>
         </ul>
       </li>
@@ -443,29 +523,34 @@
         </ul>
       </li>
       <li>
-        <span class="step-title">Signal leaves the desk but the PA is still silent? Check the DriveRack.</span>
+        <span class="step-title">Signal leaves the desk but the PA is still silent? It's the amps or the cable.</span>
         <ul>
-          <li>The <strong>dbx DriveRack</strong> sits between the FOH main out and the amps. It can kill the PA while the desk meters look perfectly fine.</li>
-          <li>Is it <strong>powered</strong> and receiving input (input meters moving)?</li>
-          <li><strong>Outputs muted?</strong> Wrong <strong>program/preset</strong> loaded? A limiter clamped all the way down?</li>
-          <li>Know your <strong>bypass / known-good preset</strong> so you can get sound back fast, then diagnose.</li>
+          <li>There's <strong>no DriveRack in the chain anymore</strong> — the desk out goes straight to the amps, so there's no processor in between to mute you or clamp you down.</li>
+          <li>Amps powered? Gain knobs up? Input cable seated at both ends?</li>
+          <li>Amp in protect / thermal? Most will show it on a front-panel LED.</li>
         </ul>
       </li>
       <li>
         <span class="step-title">Still nothing?</span>
         <ul>
           <li>Solo/PFL stuck on somewhere? (Check the solo clear.)</li>
-          <li>Headphones work but XLR out doesn't → it's an <strong>output patch</strong> problem on the desk, guaranteed. Back to step 5. (If the desk out is clean, it's downstream — DriveRack or amps, step 6.)</li>
+          <li>Headphones work but XLR out doesn't → it's an <strong>output patch</strong> problem on the desk, guaranteed. Back to step 5. (If the desk out is clean, it's downstream — cable or amps, step 6.)</li>
         </ul>
       </li>
     </ol>
+
+    <div class="callout warn">
+      <div class="callout-head">Bus has signal but no output — split it fast</div>
+      <p>Does the <strong>bus master meter</strong> move? Send meters only prove the channel feeds the bus. Meter still → it's inside the desk: fader, mute, pre/post, bus config. Meter moving → it's the output side: output patch, or a wedge wrongly patched to an S32 out.</p>
+      <p style="margin-top:0.6rem"><strong>Bus fader does nothing but signal passes anyway → output tap.</strong> <code>ROUTING → Out 1-16</code>, check the tap next to the source. A pre-fader tap sits upstream of the bus master, so the fader is decorative.</p>
+    </div>
   </section>
 
   <section id="monitors">
-    <h2><span class="num">4</span>Monitor desk</h2>
-    <p class="section-sub">This is X32 #1 — its own desk, its own preamps. Each wedge / IEM is one mix bus (Mix 1, Mix 2, Mix 3…), and each bus is one person's monitor.</p>
+    <h2><span class="num">5</span>Monitor desk</h2>
+    <p class="section-sub">Its own desk, its own preamps, its own outputs. Each wedge / IEM is one mix bus (Mix 1, Mix 2, Mix 3…), and each bus is one person's monitor.</p>
 
-    <p>If you already run a QU32 (or any monitor desk), you already know this workflow — the X32 just labels one button differently. On the QU you hit a <strong>Mix</strong> master button and the faders flip to show that mix's levels; you fly the faders to build that person's wedge, then hit the next Mix and do the next person. The X32 does exactly the same thing:</p>
+    <p>If you already run a QU32, you already know this workflow — the X32 just labels one button differently. On the QU you hit a <strong>Mix</strong> master button and the faders flip to show that mix's levels; you fly the faders to build that person's wedge, then hit the next Mix and do the next person. The X32 does exactly the same thing:</p>
 
     <div class="callout warn">
       <div class="callout-head">This is your mix-on-faders workflow — the X32 button is "Sends on Fader"</div>
@@ -474,16 +559,23 @@
 
     <p><strong>Why "pre-fader" matters — it's what makes that workflow behave:</strong> the faders you fly in that mode are the sends, and those sends need to be <strong>pre-fader</strong>. That's the setting that keeps each wedge independent: when you're in Mix&nbsp;3 and pull the vocal down, it drops <em>only</em> in Mix&nbsp;3 — Mix&nbsp;1, 2, 4, 5 don't move. If a bus is set post-fader instead, the sends get chained to each channel's main fader and the wedges start dragging each other around. Your QU defaults to pre-fader for monitor sends; on the X32 you set it yourself, so check it.</p>
 
+    <p>Note this has nothing to do with FOH. Two separate consoles with separate DSP means FOH fader moves can never reach the monitor mixes — and with an analog split that's doubly true. Pre-fader matters <em>inside</em> the monitor desk.</p>
+
     <ul>
       <li><strong>Channel sends to the monitor buses: pre-fader</strong> — so the wedges stay independent (this is the whole ballgame)</li>
       <li>Bus <strong>output tap: post-fader</strong>, so the bus <strong>master</strong> fader still sets that whole wedge's volume — "turn the drummer's wedge down" is one fader, the Mix bus master</li>
       <li><strong>Limiter on every monitor bus</strong>, threshold below −3 dBFS — cheap insurance against a dropped mic or a feedback squeal going straight into someone's ears</li>
       <li>The channel's <em>own</em> fader (normal view, not Sends-on-Fader) does almost nothing here — park it at unity and leave it</li>
     </ul>
+
+    <div class="callout danger">
+      <div class="callout-head">⚠ Two pre/post settings that want opposite answers</div>
+      <p>Sends <strong>pre-fader</strong>, output tap <strong>post-fader</strong>. Two different settings at two different points, and they want opposite values. This is the live trap in this rig and it's easy to set wrong while you're chasing a no-output problem.</p>
+    </div>
   </section>
 
   <section id="scenes">
-    <h2><span class="num">5</span>Scenes &amp; safes — the festival killer</h2>
+    <h2><span class="num">6</span>Scenes &amp; safes — the festival killer</h2>
     <p class="section-sub">Multiple bands = multiple scene recalls = the chance to nuke your PA between sets.</p>
     <p>When you load a band's scene, by default it can overwrite <strong>routing, output patch, and preamp gains.</strong> Load the wrong scene and the house goes silent — mid-changeover, with an audience.</p>
 
@@ -511,8 +603,9 @@
     <h3>Set global safes before doors</h3>
     <ul>
       <li><strong>Routing I/O</strong> — so a scene recall can't repatch your inputs</li>
-      <li><strong>Output Patch</strong> — so a scene recall can't disconnect your PA</li>
-      <li><strong>Preamp (HA)</strong> — so a scene recall can't blow up your gains</li>
+      <li><strong>Output Patch</strong> — so a scene recall can't disconnect your PA. There's nothing downstream to save you now that the DriveRack is gone.</li>
+      <li><strong>Preamp (HA)</strong> — so a scene recall can't blow up the gains you just spent section 3 auditing</li>
+      <li><strong>Main LR insert</strong> — so a recall can't drop your system EQ</li>
       <li>Consider safing <strong>mutes</strong> on input channels, so a stale scene can't mute something live</li>
     </ul>
     <p>Then a band's scene recalls their <strong>channel processing</strong> (EQ, comp, mix) without ever touching the infrastructure keeping sound in the room.</p>
@@ -526,18 +619,22 @@
   </section>
 
   <section id="checklist">
-    <h2><span class="num">6</span>Before you leave the house</h2>
+    <h2><span class="num">7</span>Before you leave the house</h2>
     <ul class="checklist">
-      <li><span class="box"></span><span>Both X32s on the <strong>same firmware</strong> (mismatches cause weird show-file behavior)</span></li>
+      <li><span class="box"></span><span>Both X32s on the <strong>same firmware</strong> (mismatches cause weird show-file behavior) — and the <strong>S32 on matching firmware</strong> too</span></li>
       <li><span class="box"></span><span>Show file saved to <strong>USB</strong>, and a <strong>second USB</strong> with the same file</span></li>
-      <li><span class="box"></span><span>Agreed with monitor engineer: <strong>who sends phantom</strong> (the direct-leg desk)</span></li>
+      <li><span class="box"></span><span><strong>Head amp audit done</strong> — Gain Split checked, actual S32 gains reviewed, HA Gain Remote off (section 3). Do this before dialing anything downstream.</span></li>
+      <li><span class="box"></span><span>Agreed with monitor engineer: <strong>who sends phantom</strong> — exactly one side, passive Y split</span></li>
+      <li><span class="box"></span><span><strong>Both desks on the same power distro</strong> if at all possible — no ground lift on this snake</span></li>
+      <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
+      <li><span class="box"></span><span>Wedges patched to the <strong>monitor desk's own outs</strong>, not the S32's</span></li>
+      <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
-      <li><span class="box"></span><span><strong>dbx DriveRack</strong> (FOH → PA): right program loaded, outputs unmuted, and you know how to bypass to a known-good state</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
 
     <div class="callout danger">
-      <div class="callout-head">If something goes sideways this weekend</div>
+      <div class="callout-head">If something goes sideways</div>
       <p>Text me what you're seeing — what's metering, what isn't, where the signal stops. I can walk the tree above faster than you can find it in a manual with a band waiting.</p>
       <p style="margin-top:0.6rem"><strong>Good for:</strong> menu paths, routing logic, "why is this channel silent," what a setting actually does. <strong>Not:</strong> ears in the room. If it sounds wrong but the routing is right, that's yours.</p>
     </div>
@@ -545,12 +642,15 @@
 
   <hr class="divider-rule">
   <footer>
-    <div>Published July 14, 2026 · Built for Pioneer Point Festival</div>
+    <div>Originally published July 14, 2026 · Revised August 30, 2026 for the current rig</div>
     <div class="sources">
       <strong style="color:var(--text-primary); font-weight:600;">Sources:</strong><br>
       <a href="https://drewbrashler.com/2022/intro-to-the-mixbus/">Drew Brashler — mixbus</a> ·
       <a href="https://drewbrashler.com/2016/behringer-x32-scene-safes/">scene safes</a> ·
       <a href="https://drewbrashler.com/2017/x32-output-tap/">output tap</a> ·
+      <a href="https://drewbrashler.com/2017/behringer-x32-effects-tutorial-inserting-effect/">inserting an effect</a> ·
+      <a href="https://behringer.world/viewtopic.php?t=923">Behringer forums — head amp settings</a> ·
+      <a href="https://www.seismicaudiospeakers.com/products/sarmss-32x515-32-channel-xlr-trs-combo-splitter-snake-cable-5-and-15-xlr-trunk">Seismic Audio — SARMSS-32x515</a> ·
       <a href="https://www.iemrig.com/guides/x32-iem-setup">IEM Rig — X32 IEM setup</a> ·
       <a href="https://www.sweetwater.com/sweetcare/articles/behringer-x32-sound-routing-and-recording/">Sweetwater — X32 routing</a>
     </div>
