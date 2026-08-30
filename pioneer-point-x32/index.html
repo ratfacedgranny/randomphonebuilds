@@ -431,19 +431,12 @@
       <li><strong>Mid fills need delay.</strong> They're closer to the audience than the arrays, so their sound arrives early and has to be held back. See below — the current setting needs rebuilding.</li>
     </ul>
 
-    <div class="callout danger">
-      <div class="callout-head">⚠ Delay only does something relative</div>
-      <p>There's currently <strong>20 ft of delay on the mains, the subs and the mid fills</strong>. Applied equally to all three, that leaves their timing relationship exactly as it was — it aligns nothing, and adds <strong>~17.8 ms of latency to the entire PA</strong> for no benefit. Anyone on stage hearing the PA gets an extra 18 ms slap behind their wedges.</p>
-      <p style="margin-top:0.6rem"><strong>delay (ms) ≈ distance (ft) × 0.89</strong> at ~70&nbsp;°F, where sound travels about 1125 ft/s. So 20 ft = 17.8 ms. (Sound moves faster when it's hot — ~0.87 ms/ft on a 90° afternoon. Irrelevant over 20 ft, matters for a real delay tower.)</p>
+    <div class="callout warn">
+      <div class="callout-head">Delay — set, with the math kept for reference</div>
+      <p>Delay only does something <strong>relative</strong>: it's the difference between sources that matters, so the same value applied to everything cancels out and just adds latency. Mains are the reference at zero; the fills are held back to match them.</p>
+      <p style="margin-top:0.6rem"><strong>delay (ms) ≈ distance (ft) × 0.89</strong> at ~70&nbsp;°F, where sound travels about 1125 ft/s. So 20 ft = 17.8 ms. (Sound moves faster when it's hot — ~0.87 ms/ft on a 90° afternoon. Irrelevant over short throws, matters for a real delay tower.)</p>
+      <p style="margin-top:0.6rem"><strong>Aligning subs by ear:</strong> play steady low end, <strong>flip the sub polarity</strong> and tune delay for the <strong>deepest null</strong>, then flip polarity back — where it cancels hardest reversed is where it sums hardest forward. <strong>On fills,</strong> add ~10&nbsp;ms past the measured figure so the precedence effect keeps the image on the stage.</p>
     </div>
-
-    <p><strong>Rebuild it from zero:</strong></p>
-    <ul>
-      <li><strong>Mains = the reference, delay 0.</strong> Everything aligns <em>to</em> the arrays. Only delay the mains if you're aligning them to something farther out.</li>
-      <li><strong>Subs:</strong> align to the mains at the crossover — driven by the physical offset between the sub and array acoustic origins, usually <strong>a few ms</strong>, not 18. By ear: play steady low end, <strong>flip the sub polarity</strong> and adjust delay for the <strong>deepest null</strong>, then flip polarity back. Where it cancels hardest reversed is where it sums hardest forward.</li>
-      <li><strong>Mid fills:</strong> measure arrays → fills, multiply by 0.89. If the fills really are ~20 ft downstage, 17.8 ms is right — but <em>for the fills only</em>, with the mains at zero.</li>
-      <li><strong>Then add ~10 ms on top of the fills.</strong> The precedence effect pulls the image back toward the stage, so the fills add coverage without the front rows localizing on a box next to them. Align first, then offset.</li>
-    </ul>
 
     <div class="callout warn">
       <div class="callout-head">Two buses, opposite pre/post answers</div>
@@ -679,7 +672,7 @@
       <li><span class="box"></span><span><strong>Main LR limiter armed</strong> — no DriveRack downstream anymore, so the desk is the only thing between a feedback squeal and your drivers</span></li>
       <li><span class="box"></span><span><strong>EXT SUB switch ON on the line arrays</strong> — and sub polarity checked (section 1)</span></li>
       <li><span class="box"></span><span><strong>Sub / fill aux comps verified as limiters</strong> — PEAK detection, high ratio, fast attack, threshold set at gig level</span></li>
-      <li><span class="box"></span><span><strong>Delay scheme rebuilt from zero</strong> — mains at 0 as the reference, subs a few ms, fills by measured distance × 0.89 plus ~10 ms precedence offset</span></li>
+      <li><span class="box"></span><span><strong>Delays confirmed</strong> — mains at 0 as the reference, fills held back to match</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
