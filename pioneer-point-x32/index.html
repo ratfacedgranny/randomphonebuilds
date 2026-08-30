@@ -661,10 +661,17 @@
 
   <section id="checklist">
     <h2><span class="num">7</span>Before you leave the house</h2>
+    <div class="callout warn">
+      <div class="callout-head">Head amps come first</div>
+      <p>Every gate, comp and limiter threshold on the desk is dialed relative to gain. The three head-amp checks below come before anything else on this list — audit gain first, then dial, or you'll set it all twice.</p>
+    </div>
     <ul class="checklist">
       <li><span class="box"></span><span>Both X32s on the <strong>same firmware</strong> (mismatches cause weird show-file behavior) — and the <strong>S32 on matching firmware</strong> too</span></li>
       <li><span class="box"></span><span>Show file saved to <strong>USB</strong>, and a <strong>second USB</strong> with the same file</span></li>
-      <li><span class="box"></span><span><strong>Head amp audit done</strong> — Gain Split checked, actual S32 gains reviewed, HA Gain Remote off (section 3). Do this before dialing anything downstream.</span></li>
+      <li><span class="box"></span><span><strong>Head amps ① — Gain Split checked on the FOH X32.</strong> If it's on, the channel knob is a ±18 dB digital trim, not the S32's preamp. Recommend off (section 3).</span></li>
+      <li><span class="box"></span><span><strong>Head amps ② — actual S32 analog gains reviewed</strong> at <code>SETUP → Preamps</code>, not just the channel strips</span></li>
+      <li><span class="box"></span><span><strong>Head amps ③ — HA Gain Remote off.</strong> Nothing else is on AES50 in this rig.</span></li>
+      <li><span class="box"></span><span>Per channel: <strong>phantom state, low-cut, phase invert</strong>, nothing pinned at an extreme — and check the <strong>S32's own front panel</strong>, its preamps can be set locally on the box</span></li>
       <li><span class="box"></span><span>Agreed with monitor engineer: <strong>who sends phantom</strong> — exactly one side, passive Y split</span></li>
       <li><span class="box"></span><span><strong>Both desks on the same power distro</strong> if at all possible — no ground lift on this snake</span></li>
       <li><span class="box"></span><span><strong>FOH inputs set to AES50 A</strong>, <strong>monitor inputs set to Local</strong> — the two desks are sourced differently</span></li>
