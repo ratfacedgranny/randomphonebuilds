@@ -372,7 +372,7 @@
 
   <div class="callout warn">
     <div class="callout-head">Revised August 30, 2026</div>
-    <p>The original version of this page described a <strong>pure analog split with a dbx DriveRack</strong> in the output chain. Both of those are now wrong. The rig is a <strong>hybrid</strong> — analog splitter to the monitor desk, S32 stage box to FOH over AES50 — and <strong>the DriveRack is out of the chain entirely.</strong> Sections 1, 2, 4 and 7 changed, and section 3 (head amps) is new.</p>
+    <p>The original version of this page described a <strong>pure analog split with a dbx DriveRack</strong> in the output chain. Both of those are now wrong. The rig is a <strong>hybrid</strong> — analog splitter to the monitor desk, S32 stage box to FOH over AES50 — and <strong>the DriveRack is out of the chain entirely.</strong> Sections 1, 2, 4 and 8 were rewritten; sections 3 (head amps) and 6 (the lead vocal chain) are new.</p>
   </div>
 
   <nav class="toc">
@@ -383,6 +383,7 @@
       <li><a href="#headamps">Head amps — where FOH gain really lives</a></li>
       <li><a href="#no-audio">No audio — the fast tree</a></li>
       <li><a href="#monitors">Monitor desk</a></li>
+      <li><a href="#vocal">Lead vocal — the Combinator insert</a></li>
       <li><a href="#scenes">Scenes &amp; safes — the festival killer</a></li>
       <li><a href="#checklist">Before you leave the house</a></li>
     </ol>
@@ -632,8 +633,68 @@
     </div>
   </section>
 
+  <section id="vocal">
+    <h2><span class="num">6</span>Lead vocal — the Combinator insert</h2>
+    <p class="section-sub">Multiband compression on the lead vocal — "Vocal 2", channel 16. Loaded as an <strong>insert</strong>, not an FX send, so the whole vocal goes through it with no parallel blend.</p>
+
+    <h3>Patching it in</h3>
+    <ul>
+      <li>Load <strong>Combinator</strong> into an <strong>insert-only FX slot (FX 5–8)</strong> — that leaves FX 1–4 free for reverb and delay sends</li>
+      <li>On ch16: <code>SELECT</code> → <code>CONFIG</code> → <strong>Insert</strong> → turn it <strong>ON</strong> and point it at that slot</li>
+      <li>Insert <strong>position: POST</strong>, after the channel EQ and dynamics, so the channel comp isn't fighting it and the multiband sees an already-EQ'd vocal</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-head">This box doesn't work the way most multibands do</div>
+      <p>There is <strong>one global threshold, ratio, attack and release</strong> for the whole processor. The five bands do <em>not</em> get their own — each band only gets a <strong>±10 dB offset</strong> (<code>Band Thr</code>) around that global threshold, plus a <code>Band Gain</code>.</p>
+      <p style="margin-top:0.6rem">So you set the overall behavior once, then nudge individual bands to compress more or less than the rest. Going in expecting five independent compressors will just confuse you.</p>
+    </div>
+
+    <h3>Global controls — starting values</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Control</th><th>Set to</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Mix</strong></td><td>100%</td><td>Serial on purpose. Anything under 100% reintroduces the parallel blend you didn't want.</td></tr>
+          <tr><td><strong>Ratio</strong></td><td>2:1 – 2.5:1</td><td>Gentle. Multiband at high ratios sounds unnatural on a voice. <strong>Don't use the <code>Limiting</code> setting</strong> — that's bus/mastering duty.</td></tr>
+          <tr><td><strong>Attack</strong></td><td>~6–8 <span style="color:var(--text-secondary)">(0–19 scale)</span></td><td>A fast attack dulls consonants and hurts diction. This lets the transient through and catches the body behind it.</td></tr>
+          <tr><td><strong>Release</strong></td><td>~200 ms, or Auto</td><td>Auto Release is fair for a live vocal with big dynamic swings — start there if you don't want to babysit it.</td></tr>
+          <tr><td><strong>Threshold</strong></td><td>by ear</td><td>Down until you see <strong>2–4 dB</strong> of reduction on the loudest phrases. More than that on a lead vocal starts sounding processed.</td></tr>
+          <tr><td><strong>X-Over</strong></td><td>0 (centered)</td><td>Shifts all the crossover points as a group. Leave it centered until you have a reason.</td></tr>
+          <tr><td><strong>Slope</strong></td><td>12 dB</td><td>Gentler, more natural overlap between bands. 48 dB is surgical — better for precision work than vocal glue.</td></tr>
+          <tr><td><strong>SBC</strong></td><td>OFF to start</td><td>Spectrum Balance Control actively reshapes the spectrum. At a gig that's another moving part that can fight your EQ.</td></tr>
+          <tr><td><strong>Gain</strong> (global)</td><td>0, then match</td><td>Make bypassed and engaged the same loudness, or you'll fool yourself into thinking it sounds better.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Per-band offsets — where the vocal work happens</h3>
+    <p>Negative <code>Band Thr</code> means that band compresses <em>more</em>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Band</th><th>Band Thr</th><th>Doing what</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Low</strong></td><td>+6 to +10</td><td>Back it off — you don't want the multiband chewing on rumble and proximity. That's the HPF's job.</td></tr>
+          <tr><td><strong>Lo Mid</strong></td><td>+2 to +4</td><td>Light touch, so the body of the voice doesn't pump.</td></tr>
+          <tr><td><strong>Mid</strong></td><td>0</td><td>Reference band — the core of the vocal.</td></tr>
+          <tr><td><strong>Hi Mid</strong></td><td>−2 to −4</td><td>More compression: presence and harshness control.</td></tr>
+          <tr><td><strong>High</strong></td><td>−4 to −6</td><td>Most compression. This is the sibilance band — effectively your de-esser.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Leave <code>Band Gain</code> at <strong>0 across</strong> to start, and make small moves only after you've heard it in the room.</p>
+
+    <div class="callout danger">
+      <div class="callout-head">⚠ Band Solo is destructive</div>
+      <p>It isn't a monitoring-only solo like the ones on the channel strips — it actually isolates the band in the signal path. <strong>Never touch it during a show</strong>, and don't leave it engaged.</p>
+    </div>
+
+    <p style="color:var(--text-secondary)">All of the above is a starting patch, not a mix. The thresholds and offsets are ear work — these numbers just get you somewhere sane fast.</p>
+  </section>
+
   <section id="scenes">
-    <h2><span class="num">6</span>Scenes &amp; safes — the festival killer</h2>
+    <h2><span class="num">7</span>Scenes &amp; safes — the festival killer</h2>
     <p class="section-sub">Multiple bands = multiple scene recalls = the chance to nuke your PA between sets.</p>
     <p>When you load a band's scene, by default it can overwrite <strong>routing, output patch, and preamp gains.</strong> Load the wrong scene and the house goes silent — mid-changeover, with an audience.</p>
 
@@ -677,7 +738,7 @@
   </section>
 
   <section id="checklist">
-    <h2><span class="num">7</span>Before you leave the house</h2>
+    <h2><span class="num">8</span>Before you leave the house</h2>
     <div class="callout warn">
       <div class="callout-head">Head amps come first</div>
       <p>Every gate, comp and limiter threshold on the desk is dialed relative to gain. The three head-amp checks below come before anything else on this list — audit gain first, then dial, or you'll set it all twice.</p>
@@ -698,6 +759,7 @@
       <li><span class="box"></span><span><strong>Limiter thresholds set at gig level</strong> with the real amps — not in the shop</span></li>
       <li><span class="box"></span><span><strong>Delays confirmed</strong> — mains at 0 as the reference, fills held back to match</span></li>
       <li><span class="box"></span><span><strong>Identical channel order on both desks</strong> — so "gtr 2 is ringing in wedge 3" means the same thing to both of you</span></li>
+      <li><span class="box"></span><span><strong>Ch16 Combinator insert loaded and set</strong> — FX 5–8 slot, insert ON and POST, Mix 100%, band offsets dialed (section 6). <code>Band Solo</code> not left engaged.</span></li>
       <li><span class="box"></span><span>Spare XLRs, spare USB, headphones</span></li>
     </ul>
 
